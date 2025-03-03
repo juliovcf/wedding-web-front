@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGuests } from '../contexts/GuestContext';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
-  const { updateSuccess, selectedGuest, resetAll } = useGuests();
+  const location = useLocation();
+  const { selectedGuest, resetAll } = useGuests();
 
-  // Redirect if not coming from a successful update
+  // Check if we arrived here from a valid path - only runs once on mount
   useEffect(() => {
-    if (!updateSuccess) {
+    // Validate that we came from the confirmation page
+    const fromConfirmation = location.state && location.state.fromConfirmation;
+    
+    if (!fromConfirmation && !selectedGuest) {
+      console.log("Invalid access to success page, redirecting to home");
       navigate('/');
     }
-
+    
     // Reset all state when leaving the success page
     return () => {
       resetAll();
     };
-  }, [updateSuccess, navigate, resetAll]);
+  // Empty dependency array means this only runs once on mount
+  }, []);
 
   const handleReturnHome = () => {
     resetAll();
@@ -34,7 +40,7 @@ const SuccessPage = () => {
             Julio & Cristina
           </h2>
           <p className="text-neutral-600 max-w-md mx-auto">
-            15 de Junio de 2025 · Madrid
+            21 de Noviembre de 2026 · Masia de les Casotes
           </p>
         </header>
 
@@ -49,7 +55,7 @@ const SuccessPage = () => {
             ¡Gracias por confirmar!
           </h2>
           
-          {selectedGuest && (
+          {selectedGuest && selectedGuest.group && (
             <p className="text-lg text-neutral-600 mb-6">
               Hemos registrado la confirmación para {selectedGuest.group.name}.
             </p>

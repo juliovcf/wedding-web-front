@@ -61,15 +61,21 @@ const GuestGroupForm = ({ onSuccess }) => {
       kid: guest.kid,
       dietaryRestrictions: guest.dietaryRestrictions,
       suggests: guest.suggests,
+      bus: guest.bus,
       groupGuestId: selectedGuest.group.id
     }));
     
     try {
-      await updateGroupGuests(selectedGuest.group.id, guestDTOs);
-      if (onSuccess) {
-        onSuccess();
-      }
+      const result = await updateGroupGuests(selectedGuest.group.id, guestDTOs);
+      console.log("Update successful:", result);
+      // Wait briefly to show success message before navigating
+      setTimeout(() => {
+        if (onSuccess) {
+          onSuccess();
+        }
+      }, 500);
     } catch (err) {
+      console.error("Error updating guests:", err);
       // Error is handled in the context
     } finally {
       setSubmitting(false);
@@ -171,33 +177,53 @@ const GuestGroupForm = ({ onSuccess }) => {
                 </div>
               )}
 
-              <div className="mt-3 space-y-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Restricciones alimentarias
-                  </label>
-                  <input
-                    type="text"
-                    value={guest.dietaryRestrictions || ''}
-                    onChange={e => handleChange(guest.id, 'dietaryRestrictions', e.target.value)}
-                    placeholder="Alergias, intolerancias, etc."
-                    className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-olive-500"
-                  />
+              {/* Show additional fields only if attendance is confirmed */}
+              {guest.confirmedAttendance && (
+                <div className="mt-3 space-y-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Restricciones alimentarias
+                    </label>
+                    <input
+                      type="text"
+                      value={guest.dietaryRestrictions || ''}
+                      onChange={e => handleChange(guest.id, 'dietaryRestrictions', e.target.value)}
+                      placeholder="Alergias, intolerancias, etc."
+                      className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-olive-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Sugerencias de música
+                    </label>
+                    <input
+                      type="text"
+                      value={guest.suggests || ''}
+                      onChange={e => handleChange(guest.id, 'suggests', e.target.value)}
+                      placeholder="¿Qué te gustaría escuchar?"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-olive-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      ¿Volverás en bus a Onda?
+                    </label>
+                    <select
+                      value={guest.bus || ''}
+                      onChange={e => handleChange(guest.id, 'bus', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-olive-500"
+                    >
+                      <option value="">Selecciona una opción</option>
+                      <option value="20:00h">20:00h</option>
+                      <option value="00:00h">00:00h</option>
+                      <option value="No">No</option>
+                      <option value="No lo sé">No lo sé</option>
+                    </select>
+                  </div>
                 </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Sugerencias de música
-                  </label>
-                  <input
-                    type="text"
-                    value={guest.suggests || ''}
-                    onChange={e => handleChange(guest.id, 'suggests', e.target.value)}
-                    placeholder="¿Qué te gustaría escuchar?"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
-                  />
-                </div>
-              </div>
+              )}
             </div>
           ))}
         </div>

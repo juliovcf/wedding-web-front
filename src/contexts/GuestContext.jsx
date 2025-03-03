@@ -42,6 +42,7 @@ export const GuestProvider = ({ children }) => {
     setSelectedGuest(guest);
     setIsLoading(true);
     setError(null);
+    setUpdateSuccess(false); // Reset success state when loading new group
     
     try {
       const groupId = guest.group.id;
@@ -61,11 +62,15 @@ export const GuestProvider = ({ children }) => {
     setUpdateSuccess(false);
     
     try {
-      await guestService.updateGuestsByGroup(groupId, updatedGuests);
+      const result = await guestService.updateGuestsByGroup(groupId, updatedGuests);
+      console.log("API update successful:", result);
       setUpdateSuccess(true);
+      return result;
     } catch (err) {
+      console.error("API update error:", err);
       setError('Error al actualizar los invitados');
       setUpdateSuccess(false);
+      throw err;
     } finally {
       setIsLoading(false);
     }

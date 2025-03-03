@@ -19,12 +19,19 @@ const ConfirmationPage = () => {
     };
   }, [selectedGuest, navigate, resetFormState]);
 
+  // Check if updateSuccess has changed and redirect if true
+  useEffect(() => {
+    if (updateSuccess) {
+      console.log("Update success detected, navigating to success page");
+      navigate('/success', { state: { fromConfirmation: true } });
+    }
+  }, [updateSuccess, navigate]);
+
   // Handle successful update
   const handleSuccess = () => {
-    // Wait a moment to show success message, then navigate to success page
-    setTimeout(() => {
-      navigate('/success');
-    }, 1500);
+    console.log("Success handler called");
+    // Pass state with the navigation to indicate success
+    navigate('/success', { state: { fromConfirmation: true } });
   };
 
   return (
