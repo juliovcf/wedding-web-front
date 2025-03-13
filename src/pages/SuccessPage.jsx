@@ -32,16 +32,16 @@ const SuccessPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-champagne-50 bg-paper-texture bg-fixed">
+    <div className="min-h-screen bg-champagne-50 bg-elegant-gradient bg-fixed font-sans">
       <div className="container mx-auto px-4 py-10 md:py-16">
         <header className="text-center mb-10 animate-fade-in">
-          <h1 className="font-handwriting text-5xl md:text-6xl text-sage-700 mb-2 leading-tight">
+          <h1 className="font-handwriting text-5xl md:text-6xl text-sage-700 mb-2 leading-tight tracking-wide">
             ¡Nos casamos!
           </h1>
-          <h2 className="font-serif text-3xl text-sage-600 mb-4">
+          <h2 className="font-serif text-3xl text-sage-600 mb-4 tracking-wide">
             Julio & Cristina
           </h2>
-          <p className="font-sans text-sage-600 max-w-md mx-auto">
+          <p className="font-sans text-sage-600 max-w-md mx-auto tracking-wider">
             21 de Noviembre de 2026 · Masia de les Casotes
           </p>
 
@@ -55,27 +55,19 @@ const SuccessPage = () => {
             </svg>
           </div>
 
-          <h2 className="text-3xl font-handwriting text-sage-700 mb-4 text-center">
+          <h2 className="text-3xl font-handwriting text-sage-700 mb-4 text-center tracking-wide">
             ¡Gracias por confirmar!
           </h2>
           
           {selectedGuest && selectedGuest.group && (
-            <p className="text-xl font-serif text-sage-600 mb-6 text-center">
+            <p className="text-xl font-serif text-sage-600 mb-6 text-center tracking-wide">
               Hemos registrado la confirmación para {selectedGuest.group.name}.
             </p>
           )}
 
-          <p className="text-sage-600 font-sans mb-8 text-center max-w-md mx-auto">
+          <p className="text-sage-600 font-sans mb-8 text-center max-w-md mx-auto leading-relaxed tracking-wide">
             Nos vemos en nuestra boda. ¡Estamos deseando compartir este día especial contigo!
           </p>
-
-          <div className="py-6 px-6 bg-sage-50 rounded-lg mb-8 border border-sage-100">
-            <h3 className="font-serif text-lg text-sage-800 mb-3 text-center">Información importante</h3>
-            <p className="text-sage-700 font-sans text-center">
-              Recuerda que la ceremonia comenzará puntualmente a las 17:00h.
-              Por favor, llega con 30 minutos de antelación.
-            </p>
-          </div>
 
           <div className="text-center">
             <button
@@ -90,8 +82,8 @@ const SuccessPage = () => {
         <CountdownTimer weddingDate="2026-11-21T17:00:00" />
 
         <footer className="text-center text-sage-500 text-sm mt-12 font-sans">
-          <p>Para cualquier duda, contacta con nosotros en</p>
-          <p className="font-medium text-sage-600">crisgavijupeca@gmail.com</p>
+          <p className="tracking-wide">Para cualquier duda, contacta con nosotros en</p>
+          <p className="font-medium text-sage-600 tracking-wide">crisgavijupeca@gmail.com</p>
           <div className="w-8 h-1 mx-auto mt-4 bg-sage-300 rounded-full opacity-60"></div>
         </footer>
       </div>

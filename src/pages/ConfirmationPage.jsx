@@ -35,16 +35,16 @@ const ConfirmationPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-champagne-50 bg-paper-texture bg-fixed">
+    <div className="min-h-screen bg-champagne-50 bg-elegant-gradient bg-fixed font-sans">
       <div className="container mx-auto px-4 py-10 md:py-16">
         <header className="text-center mb-10 animate-fade-in">
-          <h1 className="font-handwriting text-5xl md:text-6xl text-sage-700 mb-2 leading-tight">
+          <h1 className="font-handwriting text-5xl md:text-6xl text-sage-700 mb-2 leading-tight tracking-wide">
             ¡Nos casamos!
           </h1>
-          <h2 className="font-serif text-3xl text-sage-600 mb-4">
+          <h2 className="font-serif text-3xl text-sage-600 mb-4 tracking-wide">
             Julio & Cristina
           </h2>
-          <p className="font-sans text-sage-600 max-w-md mx-auto">
+          <p className="font-sans text-sage-600 max-w-md mx-auto tracking-wider">
             21 de Noviembre de 2026 · Masia de les Casotes
           </p>
 
@@ -68,8 +68,8 @@ const ConfirmationPage = () => {
         </div>
 
         <footer className="text-center text-sage-500 text-sm mt-12 font-sans">
-          <p>Para cualquier duda, contacta con nosotros en</p>
-          <p className="font-medium text-sage-600">crisgavijupeca@gmail.com</p>
+          <p className="tracking-wide">Para cualquier duda, contacta con nosotros en</p>
+          <p className="font-medium text-sage-600 tracking-wide">crisgavijupeca@gmail.com</p>
           <div className="w-8 h-1 mx-auto mt-4 bg-sage-300 rounded-full opacity-60"></div>
         </footer>
       </div>

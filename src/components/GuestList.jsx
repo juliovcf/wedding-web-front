@@ -2,7 +2,7 @@ import React from 'react';
 import { useGuests } from '../contexts/GuestContext';
 
 const GuestList = ({ onSelectGuest }) => {
-  const { searchResults, isSearching } = useGuests();
+  const { searchResults, isSearching, hasSearched } = useGuests();
 
   // Handler for guest selection
   const handleGuestSelect = (guest) => {
@@ -11,24 +11,29 @@ const GuestList = ({ onSelectGuest }) => {
     }
   };
 
-  // No results found message
-  if (!isSearching && searchResults.length === 0) {
+  // No results found message - solo mostrar después de una búsqueda
+  if (hasSearched && !isSearching && searchResults.length === 0) {
     return (
       <div className="w-full max-w-md mx-auto mt-4 p-4 bg-champagne-50 text-sage-700 rounded-md border border-champagne-200 font-sans animate-fade-in">
         <div className="flex items-center">
           <svg className="h-6 w-6 text-champagne-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p>No hay resultados. Escribe para buscar invitados.</p>
+          <p>No hay resultados. Prueba con otro nombre.</p>
         </div>
       </div>
     );
   }
 
+  // Si no se ha realizado ninguna búsqueda, no mostrar nada
+  if (!hasSearched && searchResults.length === 0) {
+    return null;
+  }
+
   return (
     <div className="w-full max-w-md mx-auto animate-fade-in">
       {searchResults.length > 0 && (
-        <h3 className="text-lg font-serif text-sage-700 mb-3">
+        <h3 className="text-lg font-serif text-sage-700 mb-3 tracking-wide">
           {searchResults.length === 1 ? "1 invitado encontrado" : `${searchResults.length} invitados encontrados`}
         </h3>
       )}

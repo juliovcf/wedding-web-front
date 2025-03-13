@@ -9,6 +9,7 @@ export const GuestProvider = ({ children }) => {
   // State for search results
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   
   // State for selected guest group
   const [selectedGuest, setSelectedGuest] = useState(null);
@@ -24,6 +25,7 @@ export const GuestProvider = ({ children }) => {
     try {
       const results = await guestService.searchGuests(searchTerm);
       setSearchResults(results || []);
+      setHasSearched(true); // Marcar que se ha realizado una búsqueda
     } catch (err) {
       setError('Error al buscar invitados. Por favor, inténtalo de nuevo.');
       setSearchResults([]);
@@ -86,6 +88,7 @@ export const GuestProvider = ({ children }) => {
   const clearSearch = () => {
     setSearchResults([]);
     setIsSearching(false);
+    setHasSearched(false); // Reset hasSearched state
   };
 
   // Reset all state
@@ -97,12 +100,14 @@ export const GuestProvider = ({ children }) => {
     setIsLoading(false);
     setError(null);
     setUpdateSuccess(false);
+    setHasSearched(false); // Reset hasSearched state
   };
 
   // Context value
   const value = {
     searchResults,
     isSearching,
+    hasSearched,
     selectedGuest,
     groupGuests,
     isLoading,

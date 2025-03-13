@@ -12,7 +12,6 @@ const GuestGroupForm = ({ onSuccess }) => {
   } = useGuests();
   
   const [formData, setFormData] = useState([]);
-  const [allConfirmed, setAllConfirmed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   // Initialize form data when group guests are loaded
@@ -32,18 +31,6 @@ const GuestGroupForm = ({ onSuccess }) => {
       prevData.map(guest => 
         guest.id === id ? { ...guest, [field]: value } : guest
       )
-    );
-  };
-
-  // Handle toggle all confirmations
-  const handleToggleAll = () => {
-    const newConfirmed = !allConfirmed;
-    setAllConfirmed(newConfirmed);
-    setFormData(prevData =>
-      prevData.map(guest => ({
-        ...guest,
-        confirmedAttendance: newConfirmed
-      }))
     );
   };
 
@@ -100,17 +87,14 @@ const GuestGroupForm = ({ onSuccess }) => {
 
   return (
     <div className="w-full max-w-2xl mx-auto animate-fade-in">
-      <h2 className="text-2xl md:text-3xl font-handwriting text-sage-700 mb-6 text-center">
+      <h2 className="text-2xl md:text-3xl font-handwriting text-sage-700 mb-6 text-center tracking-wide">
         Confirmación de asistencia
       </h2>
       
       <div className="mb-8 bg-champagne-50 p-5 rounded-lg border border-champagne-200 shadow-sm">
-        <h3 className="text-xl font-serif text-sage-800 mb-3 text-center">
+        <h3 className="text-xl font-serif text-sage-800 mb-3 text-center tracking-wide">
           {selectedGuest.group.name}
         </h3>
-        <p className="text-sage-600 font-sans text-center max-w-md mx-auto">
-          Por favor, confirma la asistencia y completa la información para todos los invitados.
-        </p>
       </div>
 
       {error && (
@@ -136,24 +120,6 @@ const GuestGroupForm = ({ onSuccess }) => {
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-6">
-          <div 
-            className="flex items-center justify-between p-4 bg-white rounded-lg shadow-elegant cursor-pointer border border-champagne-100 hover:border-champagne-300 transition-colors"
-            onClick={handleToggleAll}
-          >
-            <span className="font-serif text-lg text-sage-800">Confirmar/Rechazar todos</span>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={allConfirmed}
-                className="sr-only peer"
-                readOnly
-              />
-              <div className="w-14 h-7 bg-sage-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-champagne-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-champagne-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sage-600"></div>
-            </label>
-          </div>
-        </div>
-
         <div className="space-y-6">
           {formData.map((guest, index) => (
             <div 
@@ -162,7 +128,7 @@ const GuestGroupForm = ({ onSuccess }) => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="font-serif text-xl text-sage-800">
+                <h3 className="font-serif text-xl text-sage-800 tracking-wide">
                   {guest.name} {guest.surname}
                 </h3>
                 <div className="flex items-center">
