@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import CountdownTimer from '../components/CountdownTimer';
 import { useGuests } from '../contexts/GuestContext';
 
 const SuccessPage = () => {
@@ -22,6 +23,7 @@ const SuccessPage = () => {
       resetAll();
     };
   // Empty dependency array means this only runs once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleReturnHome = () => {
@@ -30,60 +32,67 @@ const SuccessPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-100 to-white">
-      <div className="container mx-auto px-4 py-12">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-olive-700 mb-2">
+    <div className="min-h-screen bg-champagne-50 bg-paper-texture bg-fixed">
+      <div className="container mx-auto px-4 py-10 md:py-16">
+        <header className="text-center mb-10 animate-fade-in">
+          <h1 className="font-handwriting text-5xl md:text-6xl text-sage-700 mb-2 leading-tight">
             ¡Nos casamos!
           </h1>
-          <h2 className="text-2xl font-light text-olive-600 mb-6">
+          <h2 className="font-serif text-3xl text-sage-600 mb-4">
             Julio & Cristina
           </h2>
-          <p className="text-neutral-600 max-w-md mx-auto">
+          <p className="font-sans text-sage-600 max-w-md mx-auto">
             21 de Noviembre de 2026 · Masia de les Casotes
           </p>
+
+          <div className="w-40 h-1 mx-auto mt-6 bg-sage-300 rounded-full opacity-60"></div>
         </header>
 
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8 mb-10 text-center">
-          <div className="w-16 h-16 bg-olive-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-olive-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-8 md:p-10 mb-10 border border-champagne-100 animate-fade-in">
+          <div className="w-20 h-20 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
 
-          <h2 className="text-2xl font-bold text-neutral-800 mb-4">
+          <h2 className="text-3xl font-handwriting text-sage-700 mb-4 text-center">
             ¡Gracias por confirmar!
           </h2>
           
           {selectedGuest && selectedGuest.group && (
-            <p className="text-lg text-neutral-600 mb-6">
+            <p className="text-xl font-serif text-sage-600 mb-6 text-center">
               Hemos registrado la confirmación para {selectedGuest.group.name}.
             </p>
           )}
 
-          <p className="text-neutral-600 mb-8">
+          <p className="text-sage-600 font-sans mb-8 text-center max-w-md mx-auto">
             Nos vemos en nuestra boda. ¡Estamos deseando compartir este día especial contigo!
           </p>
 
-          <div className="py-4 px-6 bg-olive-50 rounded-lg mb-8">
-            <h3 className="font-medium text-olive-800 mb-2">Información importante</h3>
-            <p className="text-neutral-700">
+          <div className="py-6 px-6 bg-sage-50 rounded-lg mb-8 border border-sage-100">
+            <h3 className="font-serif text-lg text-sage-800 mb-3 text-center">Información importante</h3>
+            <p className="text-sage-700 font-sans text-center">
               Recuerda que la ceremonia comenzará puntualmente a las 17:00h.
               Por favor, llega con 30 minutos de antelación.
             </p>
           </div>
 
-          <button
-            onClick={handleReturnHome}
-            className="px-6 py-3 bg-olive-600 text-white rounded-md hover:bg-olive-700 transition-colors"
-          >
-            Volver al inicio
-          </button>
+          <div className="text-center">
+            <button
+              onClick={handleReturnHome}
+              className="px-8 py-3 bg-sage-600 text-white rounded-md hover:bg-sage-700 transition-all font-sans font-medium shadow-sm hover:shadow"
+            >
+              Volver al inicio
+            </button>
+          </div>
         </div>
 
-        <footer className="text-center text-neutral-500 text-sm mt-12">
+        <CountdownTimer weddingDate="2026-11-21T17:00:00" />
+
+        <footer className="text-center text-sage-500 text-sm mt-12 font-sans">
           <p>Para cualquier duda, contacta con nosotros en</p>
-          <p className="font-medium">juliocristina2025@ejemplo.com</p>
+          <p className="font-medium text-sage-600">crisgavijupeca@gmail.com</p>
+          <div className="w-8 h-1 mx-auto mt-4 bg-sage-300 rounded-full opacity-60"></div>
         </footer>
       </div>
     </div>

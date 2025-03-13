@@ -66,8 +66,7 @@ const GuestGroupForm = ({ onSuccess }) => {
     }));
     
     try {
-      const result = await updateGroupGuests(selectedGuest.group.id, guestDTOs);
-      console.log("Update successful:", result);
+      await updateGroupGuests(selectedGuest.group.id, guestDTOs);
       // Wait briefly to show success message before navigating
       setTimeout(() => {
         if (onSuccess) {
@@ -84,9 +83,9 @@ const GuestGroupForm = ({ onSuccess }) => {
 
   if (isLoading) {
     return (
-      <div className="text-center py-10">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500 mx-auto"></div>
-        <p className="mt-3 text-gray-600">Cargando invitados...</p>
+      <div className="text-center py-10 animate-pulse">
+        <div className="inline-block h-16 w-16 rounded-full bg-sage-200 opacity-75"></div>
+        <p className="mt-4 text-sage-600 font-sans">Cargando invitados...</p>
       </div>
     );
   }
@@ -94,45 +93,55 @@ const GuestGroupForm = ({ onSuccess }) => {
   if (!selectedGuest || groupGuests.length === 0) {
     return (
       <div className="text-center py-10">
-        <p className="text-gray-600">No se ha seleccionado ningún invitado</p>
+        <p className="text-sage-600 font-sans">No se ha seleccionado ningún invitado</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-lg mx-auto">
-      <h2 className="text-2xl font-semibold text-olive-700 mb-6">
+    <div className="w-full max-w-2xl mx-auto animate-fade-in">
+      <h2 className="text-2xl md:text-3xl font-handwriting text-sage-700 mb-6 text-center">
         Confirmación de asistencia
       </h2>
       
-      <div className="mb-6 bg-olive-50 p-4 rounded-md">
-        <h3 className="text-lg font-medium text-olive-700 mb-2">
+      <div className="mb-8 bg-champagne-50 p-5 rounded-lg border border-champagne-200 shadow-sm">
+        <h3 className="text-xl font-serif text-sage-800 mb-3 text-center">
           {selectedGuest.group.name}
         </h3>
-        <p className="text-neutral-600">
+        <p className="text-sage-600 font-sans text-center max-w-md mx-auto">
           Por favor, confirma la asistencia y completa la información para todos los invitados.
         </p>
       </div>
 
       {error && (
-        <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-md">
-          {error}
+        <div className="mb-6 p-4 bg-blush-100 text-blush-700 rounded-md border-l-4 border-blush-500 animate-fade-in">
+          <div className="flex">
+            <svg className="h-5 w-5 text-blush-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <p className="font-sans">{error}</p>
+          </div>
         </div>
       )}
 
       {updateSuccess && (
-        <div className="mb-6 p-4 bg-olive-100 text-olive-700 rounded-md">
-          ¡Información actualizada correctamente!
+        <div className="mb-6 p-4 bg-sage-100 text-sage-700 rounded-md border-l-4 border-sage-500 animate-fade-in">
+          <div className="flex">
+            <svg className="h-5 w-5 text-sage-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <p className="font-sans">¡Información actualizada correctamente!</p>
+          </div>
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+        <div className="mb-6">
           <div 
-            className="flex items-center justify-between p-3 bg-gray-100 rounded-md mb-4 cursor-pointer"
+            className="flex items-center justify-between p-4 bg-white rounded-lg shadow-elegant cursor-pointer border border-champagne-100 hover:border-champagne-300 transition-colors"
             onClick={handleToggleAll}
           >
-            <span className="font-medium">Confirmar/Rechazar todos</span>
+            <span className="font-serif text-lg text-sage-800">Confirmar/Rechazar todos</span>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
@@ -140,23 +149,24 @@ const GuestGroupForm = ({ onSuccess }) => {
                 className="sr-only peer"
                 readOnly
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+              <div className="w-14 h-7 bg-sage-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-champagne-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-champagne-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sage-600"></div>
             </label>
           </div>
         </div>
 
         <div className="space-y-6">
-          {formData.map(guest => (
+          {formData.map((guest, index) => (
             <div 
               key={guest.id} 
-              className="bg-white rounded-md shadow-sm p-4 border border-gray-200"
+              className="bg-white rounded-lg shadow-elegant p-5 border border-champagne-100 animate-slide-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="flex justify-between items-center mb-3">
-                <h3 className="font-medium text-lg text-gray-800">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-serif text-xl text-sage-800">
                   {guest.name} {guest.surname}
                 </h3>
                 <div className="flex items-center">
-                  <span className="text-sm text-gray-600 mr-2">
+                  <span className="text-sm font-sans text-sage-600 mr-3">
                     {guest.confirmedAttendance ? 'Asistirá' : 'No asistirá'}
                   </span>
                   <label className="relative inline-flex items-center cursor-pointer">
@@ -166,22 +176,22 @@ const GuestGroupForm = ({ onSuccess }) => {
                       onChange={e => handleChange(guest.id, 'confirmedAttendance', e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-olive-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-olive-600"></div>
+                    <div className="w-14 h-7 bg-sage-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-champagne-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-champagne-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sage-600"></div>
                   </label>
                 </div>
               </div>
 
               {guest.kid && (
-                <div className="mb-2 text-sm bg-olive-50 text-olive-800 px-2 py-1 rounded inline-block">
+                <div className="mb-3 inline-block px-3 py-1 bg-blush-100 text-blush-700 rounded-full text-xs font-sans">
                   Niño/a
                 </div>
               )}
 
               {/* Show additional fields only if attendance is confirmed */}
               {guest.confirmedAttendance && (
-                <div className="mt-3 space-y-3">
+                <div className="mt-5 space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
                       Restricciones alimentarias
                     </label>
                     <input
@@ -189,12 +199,12 @@ const GuestGroupForm = ({ onSuccess }) => {
                       value={guest.dietaryRestrictions || ''}
                       onChange={e => handleChange(guest.id, 'dietaryRestrictions', e.target.value)}
                       placeholder="Alergias, intolerancias, etc."
-                      className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-olive-500"
+                      className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
                       Sugerencias de música
                     </label>
                     <input
@@ -202,18 +212,18 @@ const GuestGroupForm = ({ onSuccess }) => {
                       value={guest.suggests || ''}
                       onChange={e => handleChange(guest.id, 'suggests', e.target.value)}
                       placeholder="¿Qué te gustaría escuchar?"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-olive-500"
+                      className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
                       ¿Volverás en bus a Onda?
                     </label>
                     <select
                       value={guest.bus || ''}
                       onChange={e => handleChange(guest.id, 'bus', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-olive-500"
+                      className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700"
                     >
                       <option value="">Selecciona una opción</option>
                       <option value="20:00h">20:00h</option>
@@ -228,17 +238,25 @@ const GuestGroupForm = ({ onSuccess }) => {
           ))}
         </div>
 
-        <div className="mt-8 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <button
             type="submit"
             disabled={submitting}
-            className={`px-6 py-3 rounded-md text-white font-medium text-lg ${
+            className={`px-8 py-3 rounded-md text-white font-sans font-medium text-lg transition-all ${
               submitting 
-                ? 'bg-olive-400 cursor-not-allowed' 
-                : 'bg-olive-600 hover:bg-olive-700'
+                ? 'bg-sage-400 cursor-not-allowed' 
+                : 'bg-sage-600 hover:bg-sage-700 shadow-sm hover:shadow'
             }`}
           >
-            {submitting ? 'Guardando...' : 'Guardar cambios'}
+            {submitting ? (
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Guardando...
+              </span>
+            ) : 'Guardar cambios'}
           </button>
         </div>
       </form>
