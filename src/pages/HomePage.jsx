@@ -73,7 +73,7 @@ const HomePage = () => {
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-champagne-100">
                 <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Código de Vestimenta</h4>
-                <p className="font-sans text-sm text-sage-600 leading-relaxed">Formal / Cocktail</p>
+                <p className="font-sans text-sm text-sage-600 leading-relaxed">Formal / Otoñal</p>
               </div>
               
               <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-champagne-100">

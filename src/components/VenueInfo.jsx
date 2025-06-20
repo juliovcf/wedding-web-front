@@ -1,12 +1,8 @@
 import React from 'react';
 
 const VenueInfo = () => {
-  // Coordenadas de la Masia de les Casotes (reemplaza con las coordenadas correctas)
-  const latitude = 39.9647; // Ejemplo - reemplaza con las coordenadas reales
-  const longitude = -0.2636; // Ejemplo - reemplaza con las coordenadas reales
-  
-  // URL de Google Maps para insertar un iframe
-  const googleMapsUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Masia+de+les+Casotes,Onda+Castellón&center=${latitude},${longitude}&zoom=15`;
+  const latitude = 40.00978671262281;
+  const longitude = -0.15575663094437234
   
   // URL para abrir Google Maps con direcciones
   const getDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&destination_place_id=ChIJjw3e2Oz_XA0R5sN3hX3tEm4`;
@@ -17,22 +13,6 @@ const VenueInfo = () => {
       
       <div className="flex flex-col md:flex-row gap-6">
         <div className="md:w-1/2">
-          {/* Opción 1: Iframe de Google Maps (necesita API key) */}
-          {/* 
-          <div className="w-full h-64 rounded-lg overflow-hidden shadow-sm">
-            <iframe 
-              title="Ubicación de la boda"
-              width="100%" 
-              height="100%" 
-              frameBorder="0" 
-              style={{ border: 0 }} 
-              src={googleMapsUrl} 
-              allowFullScreen
-            ></iframe>
-          </div>
-          */}
-
-          {/* Opción 2: Imagen estática de mapa con enlace */}
           <a 
             href={getDirectionsUrl} 
             target="_blank" 
@@ -64,9 +44,8 @@ const VenueInfo = () => {
           <div className="mt-4">
             <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Masia de les Casotes</h4>
             <p className="text-sm text-sage-600 font-sans">
-              Camí de les Casotes, s/n<br />
-              12200 Onda, Castellón<br />
-              España
+            Calle Carretera Ribesalbes, km 4<br />
+            12006 Castellón<br />
             </p>
             
             {/* Botón para obtener direcciones */}
@@ -89,38 +68,39 @@ const VenueInfo = () => {
           <div className="space-y-3">
             <div className="flex justify-between border-b border-champagne-100 pb-2">
               <span className="text-sm font-medium text-sage-700 font-sans">Ceremonia</span>
-              <span className="text-sm text-sage-600 font-sans">17:00h</span>
+              <span className="text-sm text-sage-600 font-sans">12:00h</span>
             </div>
             <div className="flex justify-between border-b border-champagne-100 pb-2">
               <span className="text-sm font-medium text-sage-700 font-sans">Cóctel</span>
-              <span className="text-sm text-sage-600 font-sans">18:00h</span>
+              <span className="text-sm text-sage-600 font-sans">13:00h</span>
             </div>
             <div className="flex justify-between border-b border-champagne-100 pb-2">
-              <span className="text-sm font-medium text-sage-700 font-sans">Cena</span>
-              <span className="text-sm text-sage-600 font-sans">20:00h</span>
+              <span className="text-sm font-medium text-sage-700 font-sans">Comida</span>
+              <span className="text-sm text-sage-600 font-sans">14:30h</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm font-medium text-sage-700 font-sans">Fiesta</span>
-              <span className="text-sm text-sage-600 font-sans">22:30h</span>
+              <span className="text-sm text-sage-600 font-sans">16:00h</span>
             </div>
           </div>
           
           <div className="mt-6 p-4 bg-champagne-50 rounded-md border border-champagne-100">
             <h5 className="font-serif text-base text-sage-800 mb-2">Información adicional</h5>
             <ul className="space-y-2 text-sm text-sage-700 font-sans">
-              <li className="flex items-start">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-sage-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                </svg>
-                Se ruega puntualidad. Por favor, llegue 30 minutos antes del inicio de la ceremonia.
-              </li>
-              <li className="flex items-start">
+            <li className="flex items-start">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-sage-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
                   <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-5h2a1 1 0 00.97-.757l1-4A1 1 0 0014 4H3zm11 3a1 1 0 00-1.477-.874l-2.675 1.783A1 1 0 0010 9v2a1 1 0 001 1h2a1 1 0 001-1v-4z" />
                 </svg>
-                Hay amplio aparcamiento disponible en el recinto.
+                Saldrán buses desde la Avd. Montendre a las 11:00h
               </li>
+              <li className="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-sage-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                Se ruega puntualidad. Por favor, llegue unos minutos antes de la salida del bus.
+              </li>
+
             </ul>
           </div>
         </div>
