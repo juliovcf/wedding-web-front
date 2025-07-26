@@ -19,7 +19,8 @@ const GuestGroupForm = ({ onSuccess }) => {
     if (groupGuests.length > 0) {
       const initialFormData = groupGuests.map(guest => ({
         ...guest,
-        confirmedAttendance: guest.confirmedAttendance === null ? false : guest.confirmedAttendance
+        confirmedAttendance: guest.confirmedAttendance === null ? false : guest.confirmedAttendance,
+        goingByBus: guest.goingByBus === null ? false : guest.goingByBus
       }));
       setFormData(initialFormData);
     }
@@ -48,6 +49,7 @@ const GuestGroupForm = ({ onSuccess }) => {
       kid: guest.kid,
       dietaryRestrictions: guest.dietaryRestrictions,
       suggests: guest.suggests,
+      goingByBus: guest.goingByBus,
       bus: guest.bus,
       groupGuestId: selectedGuest.group.id
     }));
@@ -184,20 +186,55 @@ const GuestGroupForm = ({ onSuccess }) => {
                   
                   <div>
                     <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
-                      ¿Volverás en bus a Onda?
+                      ¿Vas a ir en bus a la boda?
                     </label>
-                    <select
-                      value={guest.bus || ''}
-                      onChange={e => handleChange(guest.id, 'bus', e.target.value)}
-                      className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700"
-                    >
-                      <option value="">Selecciona una opción</option>
-                      <option value="20:00h">20:00h</option>
-                      <option value="00:00h">00:00h</option>
-                      <option value="No">No</option>
-                      <option value="No lo sé">No lo sé</option>
-                    </select>
+                    <div className="flex items-center space-x-4">
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name={`goingByBus-${guest.id}`}
+                          value="true"
+                          checked={guest.goingByBus === true}
+                          onChange={e => handleChange(guest.id, 'goingByBus', true)}
+                          className="mr-2 text-wine-600 focus:ring-wine-500"
+                        />
+                        <span className="font-sans text-sage-700">Sí</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input
+                          type="radio"
+                          name={`goingByBus-${guest.id}`}
+                          value="false"
+                          checked={guest.goingByBus === false}
+                          onChange={e => {
+                            handleChange(guest.id, 'goingByBus', false);
+                            handleChange(guest.id, 'bus', ''); // Reset bus return option
+                          }}
+                          className="mr-2 text-wine-600 focus:ring-wine-500"
+                        />
+                        <span className="font-sans text-sage-700">No</span>
+                      </label>
+                    </div>
                   </div>
+                  
+                  {/* Show return bus options only if going by bus */}
+                  {guest.goingByBus && (
+                    <div>
+                      <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
+                        ¿Vas a volver en bus y a qué hora?
+                      </label>
+                      <select
+                        value={guest.bus || ''}
+                        onChange={e => handleChange(guest.id, 'bus', e.target.value)}
+                        className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-wine-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700"
+                      >
+                        <option value="">Selecciona una opción</option>
+                        <option value="No">No</option>
+                        <option value="21h">21h</option>
+                        <option value="00h">00h</option>
+                      </select>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -211,7 +248,7 @@ const GuestGroupForm = ({ onSuccess }) => {
             className={`px-8 py-3 rounded-md text-white font-sans font-medium text-lg transition-all ${
               submitting 
                 ? 'bg-sage-400 cursor-not-allowed' 
-                : 'bg-sage-600 hover:bg-sage-700 shadow-sm hover:shadow'
+                : 'bg-wine-600 hover:bg-wine-700 shadow-sm hover:shadow'
             }`}
           >
             {submitting ? (

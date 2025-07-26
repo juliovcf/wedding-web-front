@@ -83,18 +83,18 @@ const WeddingGallery = () => {
         
         <button 
           onClick={prevImage}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 hover:bg-white transition-colors shadow-md"
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 hover:bg-wine-50 transition-colors shadow-md"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-sage-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-wine-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         
         <button 
           onClick={nextImage}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 hover:bg-white transition-colors shadow-md"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 hover:bg-wine-50 transition-colors shadow-md"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-sage-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-wine-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -111,7 +111,7 @@ const WeddingGallery = () => {
             }}
             className={`w-2 h-2 rounded-full transition-all ${
               currentImage === index 
-                ? 'bg-sage-600 w-4' // Más ancho para el actual
+                ? 'bg-wine-600 w-4' // Más ancho para el actual
                 : 'bg-sage-200'
             }`}
             aria-label={`Ver imagen ${index + 1}`}

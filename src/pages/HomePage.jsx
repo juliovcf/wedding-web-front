@@ -35,7 +35,7 @@ const HomePage = () => {
             21 de Noviembre de 2026 · Masia de les Casotes
           </p>
 
-          <div className="w-40 h-1 mx-auto mt-6 bg-sage-300 rounded-full opacity-60"></div>
+          <div className="w-40 h-1 mx-auto mt-6 bg-gradient-to-r from-sage-300 via-wine-300 to-sage-300 rounded-full opacity-60"></div>
         </header>
 
         {/* Countdown Timer */}
@@ -71,14 +71,16 @@ const HomePage = () => {
           
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-champagne-100">
+              <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-wine-200 border-opacity-50">
                 <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Código de Vestimenta</h4>
                 <p className="font-sans text-sm text-sage-600 leading-relaxed">Formal / Otoñal</p>
+                <div className="w-8 h-0.5 bg-wine-400 mt-2 rounded-full"></div>
               </div>
               
-              <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-champagne-100">
+              <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-wine-200 border-opacity-50">
                 <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Regalos</h4>
                 <p className="font-sans text-sm text-sage-600 leading-relaxed">Tu presencia es nuestro mejor regalo, pero si deseas contribuir, dispondremos de un buzón en la celebración.</p>
+                <div className="w-8 h-0.5 bg-wine-400 mt-2 rounded-full"></div>
               </div>
             </div>
             
@@ -96,7 +98,7 @@ const HomePage = () => {
         <footer className="text-center text-sage-500 text-sm mt-12 font-sans">
           <p className="tracking-wide">Para cualquier duda, contacta con nosotros en</p>
           <p className="font-medium text-sage-600 tracking-wide">crisgavijupeca@gmail.com</p>
-          <div className="w-8 h-1 mx-auto mt-4 bg-sage-300 rounded-full opacity-60"></div>
+          <div className="w-8 h-1 mx-auto mt-4 bg-gradient-to-r from-wine-300 to-sage-300 rounded-full opacity-60"></div>
         </footer>
       </div>
     </div>

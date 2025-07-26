@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const CountdownTimer = ({ weddingDate = "2026-11-21T12:00:00" }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -34,10 +34,10 @@ const CountdownTimer = ({ weddingDate = "2026-11-21T12:00:00" }) => {
 
     return (
       <div key={interval} className="flex flex-col items-center p-2 md:p-4">
-        <div className="text-2xl md:text-3xl lg:text-4xl font-serif text-champagne-800">
+        <div className={`text-2xl md:text-3xl lg:text-4xl font-serif text-champagne-800`}>
           {timeLeft[interval]}
         </div>
-        <div className="text-xs md:text-sm uppercase tracking-wide text-champagne-600">
+        <div className={`text-xs md:text-sm uppercase tracking-wide text-champagne-600`}>
           {interval}
         </div>
       </div>

@@ -66,15 +66,15 @@ const VenueInfo = () => {
         <div className="md:w-1/2">
           <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Horario</h4>
           <div className="space-y-3">
-            <div className="flex justify-between border-b border-champagne-100 pb-2">
+            <div className="flex justify-between border-b border-wine-200 border-opacity-50 pb-2">
               <span className="text-sm font-medium text-sage-700 font-sans">Ceremonia</span>
               <span className="text-sm text-sage-600 font-sans">12:00h</span>
             </div>
-            <div className="flex justify-between border-b border-champagne-100 pb-2">
+            <div className="flex justify-between border-b border-wine-200 border-opacity-50 pb-2">
               <span className="text-sm font-medium text-sage-700 font-sans">Cóctel</span>
               <span className="text-sm text-sage-600 font-sans">13:00h</span>
             </div>
-            <div className="flex justify-between border-b border-champagne-100 pb-2">
+            <div className="flex justify-between border-b border-wine-200 border-opacity-50 pb-2">
               <span className="text-sm font-medium text-sage-700 font-sans">Comida</span>
               <span className="text-sm text-sage-600 font-sans">14:30h</span>
             </div>
@@ -88,14 +88,14 @@ const VenueInfo = () => {
             <h5 className="font-serif text-base text-sage-800 mb-2">Información adicional</h5>
             <ul className="space-y-2 text-sm text-sage-700 font-sans">
             <li className="flex items-start">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-sage-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-wine-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
                   <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-5h2a1 1 0 00.97-.757l1-4A1 1 0 0014 4H3zm11 3a1 1 0 00-1.477-.874l-2.675 1.783A1 1 0 0010 9v2a1 1 0 001 1h2a1 1 0 001-1v-4z" />
                 </svg>
                 Saldrán buses desde la Avd. Montendre a las 11:00h
               </li>
               <li className="flex items-start">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-sage-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-wine-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
                 Se ruega puntualidad. Por favor, llegue unos minutos antes de la salida del bus.

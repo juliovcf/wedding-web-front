@@ -60,6 +60,18 @@ module.exports = {
           800: '#0F478D',
           900: '#00307F',
         },
+        'wine': {
+          50: '#FAF2F4',
+          100: '#F5E6EA',
+          200: '#EBCCD5',
+          300: '#E0B3C0',
+          400: '#D699AB',
+          500: '#CB7F96',
+          600: '#B85D7A',
+          700: '#9D4A65',
+          800: '#7A3750',
+          900: '#57243B',
+        },
       },
       backgroundImage: {
         'elegant-gradient': 'linear-gradient(to bottom, rgba(255, 249, 232, 0.5), rgba(255, 255, 255, 0.8))',
