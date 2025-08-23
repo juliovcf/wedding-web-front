@@ -16,6 +16,6 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "@wedding-api-url"
+    "REACT_APP_API_URL": "https://wedding-web-back.onrender.com"
   }
 }
