@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import GuestList from '../components/GuestList';
@@ -10,6 +10,7 @@ import { useGuests } from '../contexts/GuestContext';
 const HomePage = () => {
   const navigate = useNavigate();
   const { fetchGroupGuests } = useGuests();
+  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
   
   // Handle guest selection
   const handleGuestSelect = async (guest) => {
@@ -19,6 +20,11 @@ const HomePage = () => {
     } catch (error) {
       console.error('Error fetching guest group:', error);
     }
+  };
+
+  // Toggle envelope open/close
+  const toggleEnvelope = () => {
+    setIsEnvelopeOpen(!isEnvelopeOpen);
   };
 
   return (
@@ -75,35 +81,78 @@ const HomePage = () => {
             </p>
           </div>
           
-          {/* Bank Account Card */}
-          <div className="bg-gradient-to-br from-sage-100 to-champagne-100 p-6 rounded-xl border border-sage-200/50 shadow-sm max-w-md mx-auto">
-            <div className="text-center mb-4">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-sage-200 rounded-full mb-3">
-                <svg className="w-6 h-6 text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                </svg>
+          {/* Envelope Container */}
+          <div className="max-w-md mx-auto">
+            {/* Closed Envelope */}
+            {!isEnvelopeOpen && (
+              <div 
+                onClick={toggleEnvelope}
+                className="relative cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              >
+                {/* Envelope Body */}
+                <div className="bg-gradient-to-br from-champagne-200 to-sage-200 p-8 rounded-lg border border-sage-300/50 shadow-md">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-sage-200/80 rounded-full mb-4">
+                      <svg className="w-8 h-8 text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 3.26a2 2 0 001.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Información bancaria</h4>
+                    <p className="text-sm text-sage-600 font-sans italic">Haz clic para abrir</p>
+                  </div>
+                </div>
+                
+                {/* Envelope Flap */}
+                <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-sage-300 to-sage-200 rounded-t-lg border border-sage-300/50 transform origin-top transition-transform duration-300">
+                  <div className="flex justify-center pt-4">
+                    <div className="w-8 h-8 bg-wine-200 rounded-full opacity-70 flex items-center justify-center">
+                      <div className="w-4 h-4 bg-wine-400 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Cuenta bancaria</h4>
-            </div>
-            
-            <div className="space-y-3">
-              <div className="bg-white/70 p-3 rounded-lg">
-                <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-1">Titular</p>
-                <p className="font-mono text-sage-800 text-sm">Julio Gaviglio</p>
+            )}
+
+            {/* Opened Envelope with Bank Info */}
+            {isEnvelopeOpen && (
+              <div className="animate-fade-in">
+                {/* Opened Envelope Header */}
+                <div 
+                  onClick={toggleEnvelope}
+                  className="relative cursor-pointer mb-4 transform transition-all duration-300 hover:scale-105"
+                >
+                  <div className="bg-gradient-to-br from-champagne-200 to-sage-200 p-4 rounded-t-lg border border-sage-300/50">
+                    <div className="text-center">
+                      <div className="inline-flex items-center justify-center w-12 h-12 bg-sage-200/80 rounded-full mb-2">
+                        <svg className="w-6 h-6 text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                      <p className="text-sm text-sage-600 font-sans italic">Haz clic para cerrar</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bank Account Card */}
+                <div className="bg-gradient-to-br from-sage-100 to-champagne-100 p-6 rounded-xl border border-sage-200/50 shadow-sm animate-slide-down">
+                  <div className="text-center mb-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-sage-200 rounded-full mb-3">
+                      <svg className="w-6 h-6 text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                      </svg>
+                    </div>
+                    <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Cuenta bancaria</h4>
+                  </div>
+                  
+                  <div className="bg-white/70 p-4 rounded-lg text-center">
+                    <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-3">IBAN</p>
+                    <p className="font-mono text-sage-800 text-lg tracking-wider">ES XX XXXX XXXX XXXX XXXX XXXX</p>
+                  </div>
+                  
+                  <div className="w-8 h-0.5 bg-wine-400 mt-4 mx-auto rounded-full"></div>
+                </div>
               </div>
-              
-              <div className="bg-white/70 p-3 rounded-lg">
-                <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-1">IBAN</p>
-                <p className="font-mono text-sage-800 text-sm tracking-wider">ES XX XXXX XXXX XXXX XXXX XXXX</p>
-              </div>
-              
-              <div className="bg-white/70 p-3 rounded-lg">
-                <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-1">Concepto</p>
-                <p className="font-sans text-sage-800 text-sm italic">Regalo boda Julio & Cristina</p>
-              </div>
-            </div>
-            
-            <div className="w-8 h-0.5 bg-wine-400 mt-4 mx-auto rounded-full"></div>
+            )}
           </div>
         </div>
 
