@@ -11,6 +11,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { fetchGroupGuests } = useGuests();
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   
   // Handle guest selection
   const handleGuestSelect = async (guest) => {
@@ -25,6 +26,29 @@ const HomePage = () => {
   // Toggle envelope open/close
   const toggleEnvelope = () => {
     setIsEnvelopeOpen(!isEnvelopeOpen);
+  };
+
+  // Copy IBAN to clipboard
+  const copyIBAN = async (e) => {
+    e.stopPropagation(); // Prevent envelope from closing
+    const iban = "ES XX XXXX XXXX XXXX XXXX XXXX";
+    
+    try {
+      await navigator.clipboard.writeText(iban);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+    } catch (err) {
+      console.error('Error copying to clipboard:', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = iban;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    }
   };
 
   return (
@@ -144,9 +168,35 @@ const HomePage = () => {
                     <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Cuenta bancaria</h4>
                   </div>
                   
-                  <div className="bg-white/70 p-4 rounded-lg text-center">
-                    <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-3">IBAN</p>
-                    <p className="font-mono text-sage-800 text-lg tracking-wider">ES XX XXXX XXXX XXXX XXXX XXXX</p>
+                  <div className="bg-white/70 p-4 rounded-lg">
+                    <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-3 text-center">IBAN</p>
+                    <div className="flex items-center justify-between bg-white/50 p-3 rounded-lg border border-sage-200/30">
+                      <p className="font-mono text-sage-800 text-lg tracking-wider flex-1">ES XX XXXX XXXX XXXX XXXX XXXX</p>
+                      <button
+                        onClick={copyIBAN}
+                        className={`ml-3 p-2 rounded-lg transition-all duration-300 ${
+                          isCopied 
+                            ? 'bg-green-100 text-green-700 border border-green-200' 
+                            : 'bg-sage-100 text-sage-700 border border-sage-200 hover:bg-sage-200 hover:shadow-sm'
+                        }`}
+                        title="Copiar IBAN"
+                      >
+                        {isCopied ? (
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                    {isCopied && (
+                      <p className="text-xs text-green-600 font-sans mt-2 text-center animate-fade-in">
+                        ¡IBAN copiado al portapapeles!
+                      </p>
+                    )}
                   </div>
                   
                   <div className="w-8 h-0.5 bg-wine-400 mt-4 mx-auto rounded-full"></div>
