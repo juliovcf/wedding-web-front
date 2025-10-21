@@ -67,31 +67,43 @@ const HomePage = () => {
 
         {/* Additional Information */}
         <div className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 md:p-8 my-8 border border-champagne-100">
-          <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-4 tracking-wide">Información Adicional</h3>
+          <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-6 tracking-wide">Regalos</h3>
           
-          <div className="space-y-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-wine-200 border-opacity-50">
-                <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Código de Vestimenta</h4>
-                <p className="font-sans text-sm text-sage-600 leading-relaxed">Formal / Otoñal</p>
-                <div className="w-8 h-0.5 bg-wine-400 mt-2 rounded-full"></div>
+          <div className="text-center mb-6">
+            <p className="font-sans text-sage-600 leading-relaxed mb-4">
+              Tu presencia es nuestro mejor regalo, pero si deseas contribuir...
+            </p>
+          </div>
+          
+          {/* Bank Account Card */}
+          <div className="bg-gradient-to-br from-sage-100 to-champagne-100 p-6 rounded-xl border border-sage-200/50 shadow-sm max-w-md mx-auto">
+            <div className="text-center mb-4">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-sage-200 rounded-full mb-3">
+                <svg className="w-6 h-6 text-sage-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+              </div>
+              <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Cuenta bancaria</h4>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="bg-white/70 p-3 rounded-lg">
+                <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-1">Titular</p>
+                <p className="font-mono text-sage-800 text-sm">Julio Gaviglio</p>
               </div>
               
-              <div className="flex-1 p-4 bg-champagne-50 rounded-lg border border-wine-200 border-opacity-50">
-                <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Regalos</h4>
-                <p className="font-sans text-sm text-sage-600 leading-relaxed">Tu presencia es nuestro mejor regalo, pero si deseas contribuir, dispondremos de un buzón en la celebración.</p>
-                <div className="w-8 h-0.5 bg-wine-400 mt-2 rounded-full"></div>
+              <div className="bg-white/70 p-3 rounded-lg">
+                <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-1">IBAN</p>
+                <p className="font-mono text-sage-800 text-sm tracking-wider">ES XX XXXX XXXX XXXX XXXX XXXX</p>
+              </div>
+              
+              <div className="bg-white/70 p-3 rounded-lg">
+                <p className="text-xs text-sage-600 font-sans uppercase tracking-wider mb-1">Concepto</p>
+                <p className="font-sans text-sage-800 text-sm italic">Regalo boda Julio & Cristina</p>
               </div>
             </div>
             
-            <div className="p-4 bg-sage-50 rounded-lg border border-sage-100">
-              <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Alojamiento</h4>
-              <p className="font-sans text-sm text-sage-600 mb-2 leading-relaxed">Hemos reservado habitaciones con tarifas especiales en los siguientes hoteles:</p>
-              <ul className="list-disc pl-5 text-sm text-sage-600 font-sans space-y-1">
-                <li>Hotel Onda: <span className="font-medium">10% descuento</span> mencionando "Boda Julio y Cristina"</li>
-                <li>Hotel Castellón: <span className="font-medium">15% descuento</span> con código "JC2026"</li>
-              </ul>
-            </div>
+            <div className="w-8 h-0.5 bg-wine-400 mt-4 mx-auto rounded-full"></div>
           </div>
         </div>
 
