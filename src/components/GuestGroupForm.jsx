@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGuests } from '../contexts/GuestContext';
 
 const GuestGroupForm = ({ onSuccess }) => {
-  const { 
-    selectedGuest, 
-    groupGuests, 
-    isLoading, 
-    error, 
-    updateSuccess, 
-    updateGroupGuests 
+  const {
+    selectedGuest,
+    groupGuests,
+    isLoading,
+    error,
+    updateSuccess,
+    updateGroupGuests
   } = useGuests();
-  
+
   const [formData, setFormData] = useState([]);
   const [submitting, setSubmitting] = useState(false);
 
@@ -28,8 +28,8 @@ const GuestGroupForm = ({ onSuccess }) => {
 
   // Handle form field changes for a specific guest
   const handleChange = (id, field, value) => {
-    setFormData(prevData => 
-      prevData.map(guest => 
+    setFormData(prevData =>
+      prevData.map(guest =>
         guest.id === id ? { ...guest, [field]: value } : guest
       )
     );
@@ -39,7 +39,7 @@ const GuestGroupForm = ({ onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    
+
     // Convert form data to the format expected by the API
     const guestDTOs = formData.map(guest => ({
       id: guest.id,
@@ -53,7 +53,7 @@ const GuestGroupForm = ({ onSuccess }) => {
       bus: guest.bus,
       groupGuestId: selectedGuest.group.id
     }));
-    
+
     try {
       await updateGroupGuests(selectedGuest.group.id, guestDTOs);
       // Wait briefly to show success message before navigating
@@ -92,12 +92,14 @@ const GuestGroupForm = ({ onSuccess }) => {
       <h2 className="text-2xl md:text-3xl font-handwriting text-sage-700 mb-6 text-center tracking-wide">
         Confirmación de asistencia
       </h2>
-      
-      <div className="mb-8 bg-champagne-50 p-5 rounded-lg border border-champagne-200 shadow-sm">
-        <h3 className="text-xl font-serif text-sage-800 mb-3 text-center tracking-wide">
-          {selectedGuest.group.name}
-        </h3>
-      </div>
+
+      {selectedGuest?.group?.name && selectedGuest.group.name.trim() !== '' && (
+        <div className="mb-8 bg-champagne-50 p-5 rounded-lg border border-champagne-200 shadow-sm">
+          <h3 className="text-xl font-serif text-sage-800 mb-3 text-center tracking-wide">
+            {selectedGuest.group.name}
+          </h3>
+        </div>
+      )}
 
       {error && (
         <div className="mb-6 p-4 bg-blush-100 text-blush-700 rounded-md border-l-4 border-blush-500 animate-fade-in">
@@ -124,8 +126,8 @@ const GuestGroupForm = ({ onSuccess }) => {
       <form onSubmit={handleSubmit}>
         <div className="space-y-6">
           {formData.map((guest, index) => (
-            <div 
-              key={guest.id} 
+            <div
+              key={guest.id}
               className="bg-white rounded-lg shadow-elegant p-5 border border-champagne-100 animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
@@ -170,7 +172,7 @@ const GuestGroupForm = ({ onSuccess }) => {
                       className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
                       Sugerencias de música
@@ -183,7 +185,7 @@ const GuestGroupForm = ({ onSuccess }) => {
                       className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
                       ¿Vas a ir en bus a la boda?
@@ -216,7 +218,7 @@ const GuestGroupForm = ({ onSuccess }) => {
                       </label>
                     </div>
                   </div>
-                  
+
                   {/* Show return bus options only if going by bus */}
                   {guest.goingByBus && (
                     <div>
@@ -245,11 +247,10 @@ const GuestGroupForm = ({ onSuccess }) => {
           <button
             type="submit"
             disabled={submitting}
-            className={`px-8 py-3 rounded-md text-white font-sans font-medium text-lg transition-all ${
-              submitting 
-                ? 'bg-sage-400 cursor-not-allowed' 
+            className={`px-8 py-3 rounded-md text-white font-sans font-medium text-lg transition-all ${submitting
+                ? 'bg-sage-400 cursor-not-allowed'
                 : 'bg-wine-600 hover:bg-wine-700 shadow-sm hover:shadow'
-            }`}
+              }`}
           >
             {submitting ? (
               <span className="flex items-center">
