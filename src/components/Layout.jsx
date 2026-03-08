@@ -7,11 +7,29 @@ const Layout = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    // Intentar reproducir automáticamente (algunos navegadores lo bloquean sin interacción)
+    // Auto-reproducir cuando el componente monta
     if (audioRef.current) {
-      audioRef.current.play().catch(() => {
-        console.log('Autoplay bloqueado - usuario debe hacer clic para reproducir');
-      });
+      // Algunos navegadores requieren muted para autoplay, así que lo intentamos primero
+      audioRef.current.muted = false;
+      const playPromise = audioRef.current.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('✅ Música reproduciendo automáticamente');
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            console.log('⚠️ Autoplay bloqueado por el navegador. Usuario debe hacer clic:', error.message);
+            // Autoplay fue bloqueado, esperar a que el usuario haga clic en la página
+            const playOnInteraction = () => {
+              audioRef.current?.play();
+              setIsPlaying(true);
+              document.removeEventListener('click', playOnInteraction);
+            };
+            document.addEventListener('click', playOnInteraction);
+          });
+      }
     }
   }, []);
 
@@ -36,6 +54,7 @@ const Layout = ({ children }) => {
       <audio
         ref={audioRef}
         loop
+        autoPlay
         onPlay={handlePlay}
         onPause={handlePause}
       >
