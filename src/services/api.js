@@ -36,6 +36,18 @@ apiClient.interceptors.response.use(
 
 // API service functions
 export const guestService = {
+  // Get all main guests
+  getAllGuests: async () => {
+    try {
+      console.log('Fetching all guests');
+      const response = await apiClient.get('/guests');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all guests:', error);
+      throw error;
+    }
+  },
+
   // Search for guests by name or surname
   searchGuests: async (searchTerm) => {
     try {
