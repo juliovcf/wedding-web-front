@@ -22,23 +22,25 @@ export const GuestProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
-  // Load all guests when component mounts
-  useEffect(() => {
-    const loadAllGuests = async () => {
-      try {
-        setIsLoadingAllGuests(true);
-        const guests = await guestService.getAllGuests();
-        setAllGuests(guests || []);
-      } catch (err) {
-        console.error('Error loading all guests:', err);
-        setError('Error al cargar los invitados');
-      } finally {
-        setIsLoadingAllGuests(false);
-      }
-    };
+// Load all guests when component mounts
+useEffect(() => {
+  const loadAllGuests = async () => {
+    try {
+      setIsLoadingAllGuests(true);
+      const guests = await guestService.getAllGuests();
+      console.log(`✅ Invitados cargados: ${guests?.length || 0} invitados`);
+      console.log('📋 Detalle:', guests);
+      setAllGuests(guests || []);
+    } catch (err) {
+      console.error('❌ Error loading all guests:', err);
+      setError('Error al cargar los invitados');
+    } finally {
+      setIsLoadingAllGuests(false);
+    }
+  };
 
-    loadAllGuests();
-  }, []);
+  loadAllGuests();
+}, []);
 
   // Search for guests locally from allGuests
   const searchGuests = (searchTerm) => {

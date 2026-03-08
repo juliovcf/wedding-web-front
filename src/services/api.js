@@ -39,8 +39,9 @@ export const guestService = {
   // Get all main guests
   getAllGuests: async () => {
     try {
-      console.log('Fetching all guests');
+      console.log('🔄 Buscando todos los invitados...');
       const response = await apiClient.get('/guests');
+      console.log(`✅ Respuesta recibida: ${response.data?.length || 0} invitados`);
       return response.data;
     } catch (error) {
       console.error('Error fetching all guests:', error);

@@ -1,10 +1,9 @@
-import React from 'react';
 
 const Header = () => {
   return (
     <header className="text-center mb-10 md:mb-16 animate-fade-in">
       <h1 className="font-handwriting text-5xl md:text-6xl text-sage-700 mb-2 leading-tight tracking-wide text-balance">
-        Nos casamos!
+        ¡Nos casamos!
       </h1>
       <h2 className="font-serif text-3xl text-sage-600 mb-4 tracking-wide">
         Julio & Cristina
