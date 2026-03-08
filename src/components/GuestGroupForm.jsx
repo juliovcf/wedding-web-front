@@ -153,7 +153,7 @@ const GuestGroupForm = ({ onSuccess }) => {
 
               {guest.kid && (
                 <div className="mb-3 inline-block px-3 py-1 bg-blush-100 text-blush-700 rounded-full text-xs font-sans">
-                  Niño/a
+                  Adolescente/Niño
                 </div>
               )}
 
