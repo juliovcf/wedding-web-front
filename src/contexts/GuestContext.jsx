@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import guestService from '../services/api';
 
 // Create context
@@ -6,6 +6,10 @@ const GuestContext = createContext();
 
 // Context provider component
 export const GuestProvider = ({ children }) => {
+  // State for all guests (loaded on mount)
+  const [allGuests, setAllGuests] = useState([]);
+  const [isLoadingAllGuests, setIsLoadingAllGuests] = useState(true);
+  
   // State for search results
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -18,16 +22,50 @@ export const GuestProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
-  // Search for guests
-  const searchGuests = async (searchTerm) => {
+  // Load all guests when component mounts
+  useEffect(() => {
+    const loadAllGuests = async () => {
+      try {
+        setIsLoadingAllGuests(true);
+        const guests = await guestService.getAllGuests();
+        setAllGuests(guests || []);
+      } catch (err) {
+        console.error('Error loading all guests:', err);
+        setError('Error al cargar los invitados');
+      } finally {
+        setIsLoadingAllGuests(false);
+      }
+    };
+
+    loadAllGuests();
+  }, []);
+
+  // Search for guests locally from allGuests
+  const searchGuests = (searchTerm) => {
     setIsSearching(true);
     setError(null);
+    
     try {
-      const results = await guestService.searchGuests(searchTerm);
+      if (!searchTerm.trim()) {
+        setSearchResults([]);
+        setHasSearched(false);
+        setIsSearching(false);
+        return;
+      }
+
+      // Filter guests locally using unaccent-like logic
+      const normalizedTerm = searchTerm.toLowerCase().trim();
+      const results = allGuests.filter(guest => {
+        const name = guest.name?.toLowerCase() || '';
+        const surname = guest.surname?.toLowerCase() || '';
+        return name.includes(normalizedTerm) || surname.includes(normalizedTerm);
+      });
+
       setSearchResults(results || []);
-      setHasSearched(true); // Marcar que se ha realizado una búsqueda
+      setHasSearched(true);
     } catch (err) {
-      setError('Error al buscar invitados. Por favor, inténtalo de nuevo.');
+      console.error('Error searching guests locally:', err);
+      setError('Error al buscar invitados.');
       setSearchResults([]);
     } finally {
       setIsSearching(false);
@@ -105,6 +143,8 @@ export const GuestProvider = ({ children }) => {
 
   // Context value
   const value = {
+    allGuests,
+    isLoadingAllGuests,
     searchResults,
     isSearching,
     hasSearched,
