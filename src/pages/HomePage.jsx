@@ -28,7 +28,7 @@ const HomePage = () => {
 
   const copyIBAN = async (e) => {
     e.stopPropagation();
-    const iban = 'ES XX XXXX XXXX XXXX XXXX XXXX';
+    const iban = 'ES5601825319750202327727';
 
     try {
       await navigator.clipboard.writeText(iban);
@@ -196,7 +196,7 @@ const HomePage = () => {
                   </p>
                   <div className="flex items-center justify-between bg-white/50 p-3 rounded-lg border border-sage-200/30">
                     <p className="font-mono text-sage-800 text-sm md:text-lg tracking-wider flex-1 break-all">
-                      ES XX XXXX XXXX XXXX XXXX XXXX
+                      ES5601825319750202327727
                     </p>
                     <button
                       onClick={copyIBAN}
