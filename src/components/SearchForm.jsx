@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useGuests } from '../contexts/GuestContext';
 
 const SearchForm = () => {
@@ -64,7 +64,7 @@ const SearchForm = () => {
               value={searchTerm}
               onChange={handleInputChange}
               placeholder="Escribe tu nombre o apellido"
-              className="w-full px-4 py-3 border-b-2 border-sage-300 focus:border-champagne-500 bg-white/80 backdrop-blur-sm rounded-t-md focus:outline-none transition-colors placeholder-sage-400 font-sans"
+              className="w-full px-4 py-3 border-b-2 border-wine-400 focus:border-wine-600 bg-white/80 backdrop-blur-sm rounded-t-md focus:outline-none transition-colors placeholder-sage-400 font-sans"
               autoComplete="off"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">

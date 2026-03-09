@@ -1,4 +1,3 @@
-import React from 'react';
 
 const VenueInfo = () => {
   const latitude = 40.00978671262281;
@@ -8,7 +7,7 @@ const VenueInfo = () => {
   const getDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&destination_place_id=ChIJjw3e2Oz_XA0R5sN3hX3tEm4`;
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 my-8 border border-champagne-100">
+    <div className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 my-8 border border-wine-300 border-t-4 border-t-wine-600">
       <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-4 tracking-wide">Lugar de Celebración</h3>
       
       <div className="flex flex-col md:flex-row gap-6">
@@ -53,7 +52,7 @@ const VenueInfo = () => {
               href={getDirectionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 mt-3 bg-sage-100 text-sage-700 rounded-md hover:bg-sage-200 transition-colors"
+              className="inline-flex items-center px-4 py-2 mt-3 bg-wine-600 text-white rounded-md hover:bg-wine-700 transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />

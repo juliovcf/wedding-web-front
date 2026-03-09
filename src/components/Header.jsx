@@ -28,7 +28,7 @@ const Header = () => {
       </p>
       
       <div
-        className="w-64 h-px mx-auto bg-gradient-to-r from-transparent via-sage-400 to-transparent opacity-60"
+        className="w-64 h-1 mx-auto bg-gradient-to-r from-transparent via-wine-600 to-transparent opacity-60"
         aria-hidden="true"
       />
     </header>

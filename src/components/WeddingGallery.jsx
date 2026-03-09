@@ -83,7 +83,7 @@ const WeddingGallery = () => {
   const hasError = imageError[current.id];
 
   return (
-    <section className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-4 md:p-6 my-8 overflow-hidden">
+    <section className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-4 md:p-6 my-8 overflow-hidden border border-wine-300 border-t-4 border-t-wine-600">
       <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-4 tracking-wide">
         Nuestras Fotos
       </h3>
@@ -122,12 +122,12 @@ const WeddingGallery = () => {
         {/* Navigation Buttons */}
         <button
           onClick={prevImage}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-sage-400"
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-wine-600 text-white rounded-full p-2 hover:bg-wine-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-wine-400"
           aria-label="Foto anterior"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 md:h-6 md:w-6 text-sage-700"
+            className="h-5 w-5 md:h-6 md:w-6 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -139,12 +139,12 @@ const WeddingGallery = () => {
 
         <button
           onClick={nextImage}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-sage-400"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-wine-600 text-white rounded-full p-2 hover:bg-wine-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-wine-400"
           aria-label="Siguiente foto"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 md:h-6 md:w-6 text-sage-700"
+            className="h-5 w-5 md:h-6 md:w-6 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -161,8 +161,8 @@ const WeddingGallery = () => {
           <button
             key={index}
             onClick={() => goTo(index)}
-            className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-400 ${
-              currentImage === index ? 'bg-sage-600 w-6' : 'bg-sage-200 w-2 hover:bg-sage-300'
+            className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-wine-400 ${
+              currentImage === index ? 'bg-wine-600 w-6' : 'bg-wine-200 w-2 hover:bg-wine-300'
             }`}
             role="tab"
             aria-selected={currentImage === index}

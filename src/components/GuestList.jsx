@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGuests } from '../contexts/GuestContext';
 
 const GuestList = ({ onSelectGuest }) => {
@@ -37,12 +36,12 @@ const GuestList = ({ onSelectGuest }) => {
           {searchResults.length === 1 ? "1 invitado encontrado" : `${searchResults.length} invitados encontrados`}
         </h3>
       )}
-      <ul className="bg-white/90 backdrop-blur-sm rounded-md shadow-elegant divide-y divide-champagne-100">
+      <ul className="bg-white/90 backdrop-blur-sm rounded-md shadow-elegant divide-y divide-wine-200 border border-wine-300">
         {searchResults.map((guest) => (
-          <li key={guest.id} className="hover:bg-champagne-50 transition-colors">
+          <li key={guest.id} className="hover:bg-wine-50 transition-colors">
             <button
               onClick={() => handleGuestSelect(guest)}
-              className="w-full text-left px-5 py-4 focus:outline-none focus:bg-champagne-50"
+              className="w-full text-left px-5 py-4 focus:outline-none focus:bg-wine-50"
             >
               <div className="flex items-center justify-between">
                 <div>

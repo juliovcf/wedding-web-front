@@ -94,7 +94,7 @@ const GuestGroupForm = ({ onSuccess }) => {
       </h2>
 
       {selectedGuest?.group?.name && selectedGuest.group.name.trim() !== '' && (
-        <div className="mb-8 bg-champagne-50 p-5 rounded-lg border border-champagne-200 shadow-sm">
+        <div className="mb-8 bg-wine-50 p-5 rounded-lg border border-wine-300 border-l-4 border-l-wine-600 shadow-sm">
           <h3 className="text-xl font-serif text-sage-800 mb-3 text-center tracking-wide">
             {selectedGuest.group.name}
           </h3>
@@ -128,7 +128,7 @@ const GuestGroupForm = ({ onSuccess }) => {
           {formData.map((guest, index) => (
             <div
               key={guest.id}
-              className="bg-white rounded-lg shadow-elegant p-5 border border-champagne-100 animate-slide-up"
+              className="bg-white rounded-lg shadow-elegant p-5 border border-wine-300 border-t-4 border-t-wine-600 animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex justify-between items-center mb-4">
@@ -169,7 +169,7 @@ const GuestGroupForm = ({ onSuccess }) => {
                       value={guest.dietaryRestrictions || ''}
                       onChange={e => handleChange(guest.id, 'dietaryRestrictions', e.target.value)}
                       placeholder="Alergias, intolerancias, etc."
-                      className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
+                      className="w-full px-4 py-2 border-b-2 border-wine-400 focus:border-wine-600 bg-wine-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
                     />
                   </div>
 
@@ -182,7 +182,7 @@ const GuestGroupForm = ({ onSuccess }) => {
                       value={guest.suggests || ''}
                       onChange={e => handleChange(guest.id, 'suggests', e.target.value)}
                       placeholder="¿Qué te gustaría escuchar?"
-                      className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-sage-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
+                      className="w-full px-4 py-2 border-b-2 border-wine-400 focus:border-wine-600 bg-wine-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
                     />
                   </div>
 
@@ -228,7 +228,7 @@ const GuestGroupForm = ({ onSuccess }) => {
                       <select
                         value={guest.bus || ''}
                         onChange={e => handleChange(guest.id, 'bus', e.target.value)}
-                        className="w-full px-4 py-2 border-b-2 border-champagne-200 focus:border-wine-500 bg-champagne-50/30 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700"
+                        className="w-full px-4 py-2 border-b-2 border-wine-400 focus:border-wine-600 bg-wine-50/30 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700"
                       >
                         <option value="">Selecciona una opción</option>
                         <option value="No">No</option>

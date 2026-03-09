@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import { useGuests } from '../contexts/GuestContext';
@@ -41,7 +41,7 @@ const SuccessPage = () => {
         </div>
 
         <h2 className="text-3xl font-handwriting text-sage-700 mb-4 text-center tracking-wide text-balance">
-          Gracias por confirmar!
+          ¡Gracias por confirmar!
         </h2>
 
         {selectedGuest && selectedGuest.group && (
@@ -51,13 +51,13 @@ const SuccessPage = () => {
         )}
 
         <p className="text-sage-600 font-sans mb-8 text-center max-w-md mx-auto leading-relaxed">
-          Nos vemos en nuestra boda. Estamos deseando compartir este dia especial contigo!
+          ¡Nos vemos en nuestra boda. Estamos deseando compartir este dia especial contigo!
         </p>
 
         <div className="text-center">
           <button
             onClick={handleReturnHome}
-            className="px-8 py-3 bg-sage-600 text-white rounded-md hover:bg-sage-700 transition-all font-sans font-medium shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-sage-400 focus:ring-offset-2"
+            className="px-8 py-3 bg-wine-600 text-white rounded-md hover:bg-wine-700 transition-all font-sans font-medium shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2"
           >
             Volver al inicio
           </button>

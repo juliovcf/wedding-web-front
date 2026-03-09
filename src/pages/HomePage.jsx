@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import GuestList from '../components/GuestList';
@@ -52,7 +52,7 @@ const HomePage = () => {
       <CountdownTimer weddingDate="2026-11-21T17:00:00" />
 
       {/* Search and RSVP Section */}
-      <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-champagne-100">
+      <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-wine-300 border-t-4 border-t-wine-600">
         <div className="text-center mb-8 animate-fade-in">
           <h2 className="font-handwriting text-3xl text-sage-700 mb-3 tracking-wide text-balance">
             Confirma tu asistencia
@@ -76,7 +76,7 @@ const HomePage = () => {
       <WeddingGallery />
 
       {/* Gifts Section */}
-      <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 md:p-8 my-8 border border-champagne-100">
+      <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 md:p-8 my-8 border border-wine-300 border-t-4 border-t-wine-600">
         <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-6 tracking-wide">
           Regalos
         </h3>

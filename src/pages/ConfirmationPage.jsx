@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GuestGroupForm from '../components/GuestGroupForm';
 import { useGuests } from '../contexts/GuestContext';
@@ -27,11 +27,11 @@ const ConfirmationPage = () => {
   };
 
   return (
-    <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-champagne-100">
+    <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-wine-300 border-t-4 border-t-wine-600">
       <div className="mb-4">
         <button
           onClick={() => navigate('/')}
-          className="text-sage-600 hover:text-sage-800 flex items-center font-sans transition-colors focus:outline-none focus:ring-2 focus:ring-sage-400 rounded-md px-2 py-1"
+          className="text-wine-600 hover:text-wine-800 flex items-center font-sans transition-colors focus:outline-none focus:ring-2 focus:ring-wine-400 rounded-md px-2 py-1"
           aria-label="Volver a la busqueda"
         >
           <svg

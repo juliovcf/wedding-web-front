@@ -22,7 +22,7 @@ const CountdownTimer = ({ weddingDate = '2026-11-21T12:00:00' }) => {
 
   return (
     <div
-      className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 my-8 border border-champagne-100"
+      className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 my-8 border border-wine-300 border-t-4 border-t-wine-600"
       role="timer"
       aria-label="Cuenta atrás para la boda"
     >
