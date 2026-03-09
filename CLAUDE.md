@@ -44,7 +44,7 @@ wsl.exe --exec bash -c "node --version && npm --version"
 - **Comunicación API**: Fetch nativo
 - **Datos de la boda**: 
   - Fecha: 21 de noviembre de 2026
-  - Lugar: Masia de les Casotes, Onda
+  - Lugar: Masia les Casotes, Onda
   - Pareja: Julio & Cristina
 
 ## Notas importantes

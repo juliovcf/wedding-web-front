@@ -24,7 +24,7 @@ const Header = () => {
       </p>
       
       <p className="font-sans text-lg md:text-2xl text-sage-700 max-w-md mx-auto tracking-wider mb-6">
-        Masia de les Casotes
+        Masia les Casotes
       </p>
       
       <div

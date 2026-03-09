@@ -9,6 +9,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center,
+    #fdf6ee 60%,      /* beige */
+    #f0f0d5 85%,      /* verde oliva suave */
+    #ac9ca0 100%      /* granate */
+  );
 }
 
 code {

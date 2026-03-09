@@ -8,10 +8,9 @@ const images = [
   { id: 5, src: '/images/london.jpg', alt: 'Londres, Inglaterra', fallback: 'from-champagne-200 to-sage-100' },
   { id: 6, src: '/images/rubielos.jpg', alt: 'Rubielos de Mora, Espana', fallback: 'from-champagne-200 to-sage-100' },
   { id: 7, src: '/images/asturias.jpg', alt: 'Asturias, Espana', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 8, src: '/images/sevillana.jpg', alt: 'Sevillanas', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 9, src: '/images/rome.jpg', alt: 'Roma, Italia', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 11, src: '/images/wedding3.jpg', alt: 'Bodorrio Paula & Pau', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 12, src: '/images/wedding2.jpg', alt: 'Bodorrio Oscar & Ana', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 8, src: '/images/rome.jpg', alt: 'Roma, Italia', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 9, src: '/images/wedding3.jpg', alt: 'Boda Paula & Pau', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 10, src: '/images/wedding2.jpg', alt: 'Boda Oscar & Ana', fallback: 'from-champagne-200 to-sage-100' },
 ];
 
 const WeddingGallery = () => {

@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
   const handlePause = () => setIsPlaying(false);
 
   return (
-    <div className="min-h-screen bg-champagne-50 bg-elegant-gradient bg-fixed font-sans">
+    <div className="min-h-screen font-sans">
       {/* Audio element - persiste durante toda la navegación */}
       <audio
         ref={audioRef}

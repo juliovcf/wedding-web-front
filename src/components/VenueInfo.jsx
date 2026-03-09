@@ -25,7 +25,7 @@ const VenueInfo = () => {
               </div>
               <img 
                 src="/images/masia-map.jpg" 
-                alt="Mapa de la Masia de les Casotes" 
+                alt="Mapa de la Masia les Casotes" 
                 className="w-full h-full object-cover"
               />
               
@@ -41,7 +41,7 @@ const VenueInfo = () => {
           </a>
 
           <div className="mt-4">
-            <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Masia de les Casotes</h4>
+            <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Masia les Casotes</h4>
             <p className="text-sm text-sage-600 font-sans">
             Calle Carretera Ribesalbes, km 4<br />
             12006 Castellón<br />
@@ -91,7 +91,7 @@ const VenueInfo = () => {
                   <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
                   <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-5h2a1 1 0 00.97-.757l1-4A1 1 0 0014 4H3zm11 3a1 1 0 00-1.477-.874l-2.675 1.783A1 1 0 0010 9v2a1 1 0 001 1h2a1 1 0 001-1v-4z" />
                 </svg>
-                Saldrán buses desde la Avd. Montendre a las 11:00h
+                Saldrán buses desde la Avd. Montendre a las 11:30h
               </li>
               <li className="flex items-start">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-wine-500 mr-2 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">

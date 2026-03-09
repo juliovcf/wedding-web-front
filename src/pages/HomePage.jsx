@@ -57,9 +57,6 @@ const HomePage = () => {
           <h2 className="font-handwriting text-3xl text-sage-700 mb-3 tracking-wide text-balance">
             Confirma tu asistencia
           </h2>
-          <p className="font-sans text-sage-600 max-w-md mx-auto leading-relaxed">
-            Busca tu nombre para acceder a tu invitacion y confirmar tu asistencia
-          </p>
         </div>
 
         <SearchForm />
@@ -83,7 +80,7 @@ const HomePage = () => {
 
         <div className="text-center mb-6">
           <p className="font-sans text-sage-600 leading-relaxed mb-4">
-            Tu presencia es nuestro mejor regalo, pero si deseas contribuir...
+            Lo único indispensable es tu presencia
           </p>
         </div>
 

@@ -181,7 +181,7 @@ const GuestGroupForm = ({ onSuccess }) => {
                       type="text"
                       value={guest.suggests || ''}
                       onChange={e => handleChange(guest.id, 'suggests', e.target.value)}
-                      placeholder="¿Qué te gustaría escuchar?"
+                      placeholder="¿Qué te gustaría escuchar? ¿Alguna canción que no puede faltar?"
                       className="w-full px-4 py-2 border-b-2 border-wine-400 focus:border-wine-600 bg-wine-50/30 rounded-t-md focus:outline-none transition-colors font-sans placeholder-sage-400"
                     />
                   </div>
