@@ -42,6 +42,13 @@ useEffect(() => {
   loadAllGuests();
 }, []);
 
+  // Normalize strings to make searches accent-insensitive (Jose == José)
+  const normalizeString = (value) =>
+    (value || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
   // Search for guests locally from allGuests
   const searchGuests = (searchTerm) => {
     setIsSearching(true);
@@ -55,11 +62,11 @@ useEffect(() => {
         return;
       }
 
-      // Filter guests locally using unaccent-like logic
-      const normalizedTerm = searchTerm.toLowerCase().trim();
+      // Filter guests locally ignoring accents and case
+      const normalizedTerm = normalizeString(searchTerm.trim());
       const results = allGuests.filter(guest => {
-        const name = guest.name?.toLowerCase() || '';
-        const surname = guest.surname?.toLowerCase() || '';
+        const name = normalizeString(guest.name);
+        const surname = normalizeString(guest.surname);
         return name.includes(normalizedTerm) || surname.includes(normalizedTerm);
       });
 
