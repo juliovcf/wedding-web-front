@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 const images = [
   { id: 1, src: '/images/venue-1.jpg', alt: 'El Castillo de Bran', fallback: 'from-champagne-200 to-sage-200' },
@@ -14,72 +14,12 @@ const images = [
 ];
 
 const WeddingGallery = () => {
-  const [currentImage, setCurrentImage] = useState(0);
   const [imageError, setImageError] = useState({});
-  const [isFading, setIsFading] = useState(false);
-  const touchStartX = useRef(null);
-  const galleryRef = useRef(null);
-
-  const goTo = useCallback(
-    (next) => {
-      if (isFading) return;
-      setIsFading(true);
-      setTimeout(() => {
-        setCurrentImage(next);
-        setIsFading(false);
-      }, 250);
-    },
-    [isFading]
-  );
-
-  const nextImage = useCallback(() => {
-    goTo(currentImage === images.length - 1 ? 0 : currentImage + 1);
-  }, [currentImage, goTo]);
-
-  const prevImage = useCallback(() => {
-    goTo(currentImage === 0 ? images.length - 1 : currentImage - 1);
-  }, [currentImage, goTo]);
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === 'ArrowLeft') prevImage();
-      if (e.key === 'ArrowRight') nextImage();
-    };
-
-    const ref = galleryRef.current;
-    ref?.addEventListener('keydown', handleKey);
-    return () => ref?.removeEventListener('keydown', handleKey);
-  }, [nextImage, prevImage]);
-
-  // Touch / swipe handlers
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? nextImage() : prevImage();
-    }
-    touchStartX.current = null;
-  };
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageError = (id) => {
     setImageError((prev) => ({ ...prev, [id]: true }));
   };
-
-  // Preload next image
-  useEffect(() => {
-    const nextIdx = currentImage === images.length - 1 ? 0 : currentImage + 1;
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = images[nextIdx].src;
-  }, [currentImage]);
-
-  const current = images[currentImage];
-  const hasError = imageError[current.id];
 
   return (
     <section className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-4 md:p-6 my-8 overflow-hidden border border-wine-300 border-t-4 border-t-wine-600">
@@ -87,93 +27,77 @@ const WeddingGallery = () => {
         Nuestras Fotos
       </h3>
 
-      <div
-        ref={galleryRef}
-        className="relative select-none"
-        tabIndex={0}
-        role="region"
-        aria-roledescription="carrusel"
-        aria-label={`Galeria de fotos, imagen ${currentImage + 1} de ${images.length}`}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Image */}
-        <div className="w-full h-72 md:h-96 rounded-lg overflow-hidden">
-          {hasError ? (
-            <div
-              className={`w-full h-full bg-gradient-to-r ${current.fallback} flex items-center justify-center`}
-            >
-              <span className="font-handwriting text-xl text-sage-700">{current.alt}</span>
-            </div>
-          ) : (
-            <img
-              src={current.src}
-              alt={current.alt}
-              onError={() => handleImageError(current.id)}
-              className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
-                isFading ? 'opacity-0' : 'opacity-100'
+      {/* Collage Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+        {images.map((image, index) => {
+          const hasError = imageError[image.id];
+          // Make some images span 2 columns for visual variety
+          const isWide = index === 0 || index === 5;
+
+          return (
+            <button
+              key={image.id}
+              onClick={() => setSelectedImage(image)}
+              className={`relative overflow-hidden rounded-lg group focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2 ${
+                isWide ? 'col-span-2 h-48 md:h-56' : 'h-36 md:h-44'
               }`}
-              loading="lazy"
-            />
-          )}
-        </div>
-
-        {/* Navigation Buttons */}
-        <button
-          onClick={prevImage}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-wine-600 text-white rounded-full p-2 hover:bg-wine-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-wine-400"
-          aria-label="Foto anterior"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 md:h-6 md:w-6 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <button
-          onClick={nextImage}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-wine-600 text-white rounded-full p-2 hover:bg-wine-700 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-wine-400"
-          aria-label="Siguiente foto"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 md:h-6 md:w-6 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+            >
+              {hasError ? (
+                <div
+                  className={`w-full h-full bg-gradient-to-r ${image.fallback} flex items-center justify-center`}
+                >
+                  <span className="font-handwriting text-lg text-sage-700">{image.alt}</span>
+                </div>
+              ) : (
+                <>
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    onError={() => handleImageError(image.id)}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                    <span className="font-serif text-sm text-white drop-shadow-md">
+                      {image.alt}
+                    </span>
+                  </div>
+                </>
+              )}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Dot indicators */}
-      <div className="flex justify-center mt-4 gap-1.5" role="tablist" aria-label="Seleccionar imagen">
-        {images.map((_, index) => (
+      {/* Lightbox */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-label={selectedImage.alt}
+        >
           <button
-            key={index}
-            onClick={() => goTo(index)}
-            className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-wine-400 ${
-              currentImage === index ? 'bg-wine-600 w-6' : 'bg-wine-200 w-2 hover:bg-wine-300'
-            }`}
-            role="tab"
-            aria-selected={currentImage === index}
-            aria-label={`Ver imagen ${index + 1}: ${images[index].alt}`}
-          />
-        ))}
-      </div>
-
-      {/* Caption */}
-      <p className="text-center font-serif text-sm text-sage-600 mt-3" aria-live="polite">
-        {current.alt}
-      </p>
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-2"
+            aria-label="Cerrar"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div className="max-w-4xl max-h-[85vh] w-full" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              className="w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+            />
+            <p className="text-center font-serif text-sm text-white/90 mt-3">
+              {selectedImage.alt}
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
