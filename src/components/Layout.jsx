@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Footer from './Footer';
 import Header from './Header';
+import NavMenu from './NavMenu';
 
 const Layout = ({ children }) => {
   const audioRef = useRef(null);
@@ -50,6 +51,9 @@ const Layout = ({ children }) => {
 
   return (
     <div className="min-h-screen font-sans">
+      {/* Navigation Menu */}
+      <NavMenu />
+
       {/* Audio element - persiste durante toda la navegación */}
       <audio
         ref={audioRef}

@@ -10,6 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  scroll-behavior: smooth;
   background: radial-gradient(ellipse at center,
     #fdf6ee 60%,      /* beige */
     #f0f0d5 85%,      /* verde oliva suave */
