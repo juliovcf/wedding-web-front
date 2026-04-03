@@ -67,7 +67,8 @@ useEffect(() => {
       const results = allGuests.filter(guest => {
         const name = normalizeString(guest.name);
         const surname = normalizeString(guest.surname);
-        return name.includes(normalizedTerm) || surname.includes(normalizedTerm);
+        const fullName = `${name} ${surname}`;
+        return name.includes(normalizedTerm) || surname.includes(normalizedTerm) || fullName.includes(normalizedTerm);
       });
 
       setSearchResults(results || []);
