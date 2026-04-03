@@ -3,7 +3,7 @@ import { useGuests } from '../contexts/GuestContext';
 
 const SearchForm = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const { searchGuests, isSearching, error } = useGuests();
+  const { searchGuests, isSearching, error, searchResults, hasSearched } = useGuests();
 
   // Debounce function for search
   const debounce = (func, delay) => {
@@ -83,6 +83,22 @@ const SearchForm = () => {
           <p className="text-xs text-sage-500 mt-2 font-sans">
             Introduce al menos 2 caracteres para buscar
           </p>
+          {hasSearched && !isSearching && searchTerm.trim().length >= 2 && (
+            <div className="mt-2 animate-fade-in">
+              {searchResults.length > 0 ? (
+                <p className="text-sm font-sans text-sage-600 flex items-center gap-1.5">
+                  <span className="inline-flex items-center justify-center bg-sage-600 text-white text-xs font-medium rounded-full w-5 h-5">
+                    {searchResults.length}
+                  </span>
+                  {searchResults.length === 1 ? 'resultado encontrado' : 'resultados encontrados'} — desliza hacia abajo ↓
+                </p>
+              ) : (
+                <p className="text-sm font-sans text-wine-500">
+                  Sin resultados. Prueba con otro nombre.
+                </p>
+              )}
+            </div>
+          )}
         </div>
         
         <button
