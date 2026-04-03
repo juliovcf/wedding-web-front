@@ -38,8 +38,8 @@ const WeddingGallery = () => {
             <button
               key={image.id}
               onClick={() => setSelectedImage(image)}
-              className={`relative overflow-hidden rounded-lg group focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2 ${
-                isWide ? 'col-span-2 h-48 md:h-56' : 'h-36 md:h-44'
+              className={`relative overflow-hidden rounded-lg group focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2 h-44 md:h-52 ${
+                isWide ? 'col-span-2' : ''
               }`}
             >
               {hasError ? (
