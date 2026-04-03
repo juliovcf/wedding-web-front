@@ -1,16 +1,19 @@
 import { useState } from 'react';
 
 const images = [
-  { id: 1, src: '/images/venue-1.jpg', alt: 'El Castillo de Bran', fallback: 'from-champagne-200 to-sage-200' },
+  { id: 1, src: '/images/venue-1.jpg', alt: 'El Castillo de Bran, Rumania', fallback: 'from-champagne-200 to-sage-200' },
   { id: 2, src: '/images/image1.jpg', alt: 'Nuestra primera foto juntos', fallback: 'from-sage-200 to-champagne-100' },
   { id: 3, src: '/images/oporto.jpg', alt: 'Oporto, Portugal', fallback: 'from-champagne-100 to-sage-200' },
-  { id: 4, src: '/images/pais_vasco1.jpg', alt: 'Pais Vasco, Espana', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 4, src: '/images/pais_vasco1.jpg', alt: 'País Vasco, España', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 10, src: '/images/san_juan.jpeg', alt: 'San Juan de Gaztelugatxe, España', fallback: 'from-champagne-200 to-sage-100' },
   { id: 5, src: '/images/london.jpg', alt: 'Londres, Inglaterra', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 6, src: '/images/rubielos.jpg', alt: 'Rubielos de Mora, Espana', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 7, src: '/images/asturias.jpg', alt: 'Asturias, Espana', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 6, src: '/images/rubielos.jpg', alt: 'Rubielos de Mora, España', fallback: 'from-champagne-200 to-sage-100' },
   { id: 8, src: '/images/rome.jpg', alt: 'Roma, Italia', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 9, src: '/images/wedding3.jpg', alt: 'Boda Paula & Pau', fallback: 'from-champagne-200 to-sage-100' },
-  { id: 10, src: '/images/wedding2.jpg', alt: 'Boda Oscar & Ana', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 9, src: '/images/toledo.jpeg', alt: 'Toledo, España', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 11, src: '/images/moli.jpeg', alt: 'Moli l\'Abad, España', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 7, src: '/images/asturias.jpg', alt: 'Asturias, España', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 12, src: '/images/reveal.jpeg', alt: 'Nos casamos!', fallback: 'from-champagne-200 to-sage-100' },
+  { id: 13, src: '/images/romania1.jpg', alt: 'Rumania', fallback: 'from-champagne-200 to-sage-100' },
 ];
 
 const WeddingGallery = () => {
@@ -32,13 +35,13 @@ const WeddingGallery = () => {
         {images.map((image, index) => {
           const hasError = imageError[image.id];
           // Make some images span 2 columns for visual variety
-          const isWide = index === 0 || index === 5;
+          const isWide = index === 0 || index === 5 || image.id === 7;
 
           return (
             <button
               key={image.id}
               onClick={() => setSelectedImage(image)}
-              className={`relative overflow-hidden rounded-lg group focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2 h-44 md:h-52 ${
+              className={`relative overflow-hidden rounded-lg group focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2 h-48 md:h-56 ${
                 isWide ? 'col-span-2' : ''
               }`}
             >
