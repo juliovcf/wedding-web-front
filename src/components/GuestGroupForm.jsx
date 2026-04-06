@@ -13,6 +13,8 @@ const GuestGroupForm = ({ onSuccess }) => {
 
   const [formData, setFormData] = useState([]);
   const [submitting, setSubmitting] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  const [showNonAttendConfirm, setShowNonAttendConfirm] = useState(false);
 
   // Initialize form data when group guests are loaded
   useEffect(() => {
@@ -38,6 +40,28 @@ const GuestGroupForm = ({ onSuccess }) => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setValidationError('');
+
+    // Validate: if going by bus, must select a return option
+    const invalidGuests = formData.filter(
+      guest => guest.confirmedAttendance && guest.goingByBus && !guest.bus
+    );
+    if (invalidGuests.length > 0) {
+      const names = invalidGuests.map(g => `${g.name} ${g.surname}`).join(', ');
+      setValidationError(
+        `Por favor, selecciona la opción de vuelta en bus para: ${names}`
+      );
+      return;
+    }
+
+    // Check if any guest is marked as not attending and ask for confirmation
+    const nonAttendingGuests = formData.filter(guest => !guest.confirmedAttendance);
+    if (nonAttendingGuests.length > 0 && !showNonAttendConfirm) {
+      setShowNonAttendConfirm(true);
+      return;
+    }
+    setShowNonAttendConfirm(false);
+
     setSubmitting(true);
 
     // Convert form data to the format expected by the API
@@ -108,6 +132,17 @@ const GuestGroupForm = ({ onSuccess }) => {
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
             </svg>
             <p className="font-sans">{error}</p>
+          </div>
+        </div>
+      )}
+
+      {validationError && (
+        <div className="mb-6 p-4 bg-blush-100 text-blush-700 rounded-md border-l-4 border-blush-500 animate-fade-in">
+          <div className="flex">
+            <svg className="h-5 w-5 text-blush-500 mr-2 flex-shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <p className="font-sans">{validationError}</p>
           </div>
         </div>
       )}
@@ -228,13 +263,21 @@ const GuestGroupForm = ({ onSuccess }) => {
                       <select
                         value={guest.bus || ''}
                         onChange={e => handleChange(guest.id, 'bus', e.target.value)}
-                        className="w-full px-4 py-2 border-b-2 border-wine-400 focus:border-wine-600 bg-wine-50/30 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700"
+                        className={`w-full px-4 py-2 border-b-2 ${validationError && !guest.bus ? 'border-blush-500 bg-blush-50/30' : 'border-wine-400 bg-wine-50/30'} focus:border-wine-600 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700`}
                       >
                         <option value="">Selecciona una opción</option>
                         <option value="No">No</option>
                         <option value="21h">21h</option>
                         <option value="00h">00h</option>
                       </select>
+                      {validationError && !guest.bus && (
+                        <p className="mt-1.5 text-sm text-blush-600 font-sans flex items-center animate-fade-in">
+                          <svg className="h-4 w-4 mr-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                          </svg>
+                          Debes seleccionar una opción de vuelta en bus
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
@@ -242,6 +285,42 @@ const GuestGroupForm = ({ onSuccess }) => {
             </div>
           ))}
         </div>
+
+        {/* Modal de confirmación de no asistencia */}
+        {showNonAttendConfirm && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full text-center animate-fade-in">
+              <span className="text-4xl mb-4 block">⚠️</span>
+              <h3 className="text-xl font-serif text-sage-800 mb-3">¿Estás seguro?</h3>
+              <p className="text-sage-600 text-sm mb-2">
+                Los siguientes invitados están marcados como <strong>no asistentes</strong>:
+              </p>
+              <ul className="text-sage-700 font-medium text-sm mb-5 space-y-1">
+                {formData.filter(g => !g.confirmedAttendance).map(g => (
+                  <li key={g.id}>• {g.name} {g.surname}</li>
+                ))}
+              </ul>
+              <p className="text-sage-500 text-xs mb-6">
+                Si es un error, pulsa "Volver" y activa el interruptor de asistencia.
+              </p>
+              <div className="flex gap-3 justify-center">
+                <button
+                  type="submit"
+                  className="bg-gradient-to-r from-sage-600 to-wine-600 text-white px-6 py-2.5 rounded-full font-medium hover:shadow-lg transition-all hover:scale-105"
+                >
+                  Confirmar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowNonAttendConfirm(false)}
+                  className="border border-sage-300 text-sage-600 px-6 py-2.5 rounded-full font-medium hover:bg-sage-50 transition-all"
+                >
+                  Volver
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mt-10 flex justify-center">
           <button
