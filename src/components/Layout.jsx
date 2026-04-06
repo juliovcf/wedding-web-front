@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 import NavMenu from './NavMenu';
@@ -6,33 +6,20 @@ import NavMenu from './NavMenu';
 const Layout = ({ children }) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showMusicPrompt, setShowMusicPrompt] = useState(true);
 
-  useEffect(() => {
-    // Auto-reproducir cuando el componente monta
+  const startMusic = () => {
     if (audioRef.current) {
-      // Algunos navegadores requieren muted para autoplay, así que lo intentamos primero
-      audioRef.current.muted = false;
-      const playPromise = audioRef.current.play();
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('✅ Música reproduciendo automáticamente');
-            setIsPlaying(true);
-          })
-          .catch((error) => {
-            console.log('⚠️ Autoplay bloqueado por el navegador. Usuario debe hacer clic:', error.message);
-            // Autoplay fue bloqueado, esperar a que el usuario haga clic en la página
-            const playOnInteraction = () => {
-              audioRef.current?.play();
-              setIsPlaying(true);
-              document.removeEventListener('click', playOnInteraction);
-            };
-            document.addEventListener('click', playOnInteraction);
-          });
-      }
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {});
     }
-  }, []);
+    setShowMusicPrompt(false);
+  };
+
+  const dismissPrompt = () => {
+    setShowMusicPrompt(false);
+  };
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -54,11 +41,37 @@ const Layout = ({ children }) => {
       {/* Navigation Menu */}
       <NavMenu />
 
+      {/* Pop-up de música al entrar */}
+      {showMusicPrompt && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 mx-4 max-w-sm w-full text-center animate-fade-in">
+            <span className="text-4xl mb-4 block">🎵</span>
+            <h3 className="text-xl font-serif text-sage-800 mb-2">Música ambiental</h3>
+            <p className="text-sage-600 text-sm mb-6">
+              ¿Te gustaría disfrutar de música mientras navegas por nuestra invitación?
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={startMusic}
+                className="bg-gradient-to-r from-sage-600 to-wine-600 text-white px-6 py-2.5 rounded-full font-medium hover:shadow-lg transition-all hover:scale-105"
+              >
+                Sí, activar ♫
+              </button>
+              <button
+                onClick={dismissPrompt}
+                className="border border-sage-300 text-sage-600 px-6 py-2.5 rounded-full font-medium hover:bg-sage-50 transition-all"
+              >
+                No, gracias
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Audio element - persiste durante toda la navegación */}
       <audio
         ref={audioRef}
         loop
-        autoPlay
         onPlay={handlePlay}
         onPause={handlePause}
       >
