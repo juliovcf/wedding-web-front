@@ -7,7 +7,7 @@ const LABELS = {
   seconds: 'Segundos',
 };
 
-const CountdownTimer = ({ weddingDate = '2026-11-21T12:00:00' }) => {
+const CountdownTimer = ({ weddingDate = '2026-11-21T12:00:00+01:00' }) => {
   const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(weddingDate));
 
   useEffect(() => {
