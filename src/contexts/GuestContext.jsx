@@ -1,59 +1,105 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import guestService from '../services/api';
 
+// === MOCK DATA ===
+const MOCK_GUESTS = [
+  {
+    id: 1, name: "Julio", surname: "Pérez", kid: false,
+    confirmedAttendance: true, goingByBus: true, bus: "21h",
+    dietaryRestrictions: "Sin gluten", suggests: "Algo de los 80",
+    group: { id: 1, name: "Familia Pérez" }
+  },
+  {
+    id: 2, name: "Cristina", surname: "Gavilán", kid: false,
+    confirmedAttendance: true, goingByBus: false, bus: null,
+    dietaryRestrictions: "", suggests: "Música en directo",
+    group: { id: 1, name: "Familia Pérez" }
+  },
+  {
+    id: 3, name: "María", surname: "López", kid: false,
+    confirmedAttendance: true, goingByBus: true, bus: "00h",
+    dietaryRestrictions: "Vegetariana", suggests: "",
+    group: { id: 2, name: "Familia López" }
+  },
+  {
+    id: 4, name: "Carlos", surname: "López", kid: false,
+    confirmedAttendance: true, goingByBus: null, bus: "21h",
+    dietaryRestrictions: "", suggests: "Reggaeton por favor",
+    group: { id: 2, name: "Familia López" }
+  },
+  {
+    id: 5, name: "Ana", surname: "Martínez", kid: true,
+    confirmedAttendance: false, goingByBus: null, bus: null,
+    dietaryRestrictions: "", suggests: "",
+    group: { id: 3, name: "Familia Martínez" }
+  },
+  {
+    id: 6, name: "Pedro", surname: "Martínez", kid: false,
+    confirmedAttendance: true, goingByBus: true, bus: "21h",
+    dietaryRestrictions: "Alergia frutos secos", suggests: "Bachata",
+    group: { id: 3, name: "Familia Martínez" }
+  },
+  {
+    id: 7, name: "Sofía", surname: "García", kid: false,
+    confirmedAttendance: true, goingByBus: null, bus: null,
+    dietaryRestrictions: "", suggests: "",
+    group: { id: 4, name: "Amigos Universidad" }
+  },
+];
+
+const MOCK_GROUP_GUESTS = {
+  1: [MOCK_GUESTS[0], MOCK_GUESTS[1]],  // Familia Pérez
+  2: [MOCK_GUESTS[2], MOCK_GUESTS[3]],  // Familia López
+  3: [MOCK_GUESTS[4], MOCK_GUESTS[5]],  // Familia Martínez
+  4: [MOCK_GUESTS[6]],                   // Amigos Universidad
+};
+
+const USE_MOCK = true; // Cambiar a false cuando el backend esté disponible
+// ==================
+
 // Create context
 const GuestContext = createContext();
 
 // Context provider component
 export const GuestProvider = ({ children }) => {
-  // State for all guests (loaded on mount)
   const [allGuests, setAllGuests] = useState([]);
   const [isLoadingAllGuests, setIsLoadingAllGuests] = useState(true);
-  
-  // State for search results
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  
-  // State for selected guest group
   const [selectedGuest, setSelectedGuest] = useState(null);
   const [groupGuests, setGroupGuests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
-// Load all guests when component mounts
-useEffect(() => {
-  const loadAllGuests = async () => {
-    try {
-      setIsLoadingAllGuests(true);
-      const guests = await guestService.getAllGuests();
-      console.log(`✅ Invitados cargados: ${guests?.length || 0} invitados`);
-      console.log('📋 Detalle:', guests);
-      setAllGuests(guests || []);
-    } catch (err) {
-      console.error('❌ Error loading all guests:', err);
-      setError('Error al cargar los invitados');
-    } finally {
-      setIsLoadingAllGuests(false);
-    }
-  };
+  useEffect(() => {
+    const loadAllGuests = async () => {
+      try {
+        setIsLoadingAllGuests(true);
+        if (USE_MOCK) {
+          console.log('🎭 Usando datos mock (backend offline)');
+          setAllGuests(MOCK_GUESTS);
+        } else {
+          const guests = await guestService.getAllGuests();
+          setAllGuests(guests || []);
+        }
+      } catch (err) {
+        console.error('❌ Error cargando invitados:', err);
+        setError('Error al cargar los invitados');
+      } finally {
+        setIsLoadingAllGuests(false);
+      }
+    };
+    loadAllGuests();
+  }, []);
 
-  loadAllGuests();
-}, []);
-
-  // Normalize strings to make searches accent-insensitive (Jose == José)
   const normalizeString = (value) =>
-    (value || '')
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
+    (value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-  // Search for guests locally from allGuests
   const searchGuests = (searchTerm) => {
     setIsSearching(true);
     setError(null);
-    
     try {
       if (!searchTerm.trim()) {
         setSearchResults([]);
@@ -61,8 +107,6 @@ useEffect(() => {
         setIsSearching(false);
         return;
       }
-
-      // Filter guests locally ignoring accents and case
       const normalizedTerm = normalizeString(searchTerm.trim());
       const results = allGuests.filter(guest => {
         const name = normalizeString(guest.name);
@@ -70,11 +114,9 @@ useEffect(() => {
         const fullName = `${name} ${surname}`;
         return name.includes(normalizedTerm) || surname.includes(normalizedTerm) || fullName.includes(normalizedTerm);
       });
-
       setSearchResults(results || []);
       setHasSearched(true);
     } catch (err) {
-      console.error('Error searching guests locally:', err);
       setError('Error al buscar invitados.');
       setSearchResults([]);
     } finally {
@@ -82,22 +124,25 @@ useEffect(() => {
     }
   };
 
-  // Fetch guests from a group
   const fetchGroupGuests = async (guest) => {
     if (!guest || !guest.group || !guest.group.id) {
       setError('No se pudo encontrar el grupo de invitados');
       return;
     }
-    
     setSelectedGuest(guest);
     setIsLoading(true);
     setError(null);
-    setUpdateSuccess(false); // Reset success state when loading new group
-    
+    setUpdateSuccess(false);
     try {
-      const groupId = guest.group.id;
-      const groupMembers = await guestService.getGuestsByGroup(groupId);
-      setGroupGuests(groupMembers || []);
+      if (USE_MOCK) {
+        console.log('🎭 Cargando grupo mock:', guest.group.id);
+        // Simular un pequeño delay para ver el spinner
+        await new Promise(r => setTimeout(r, 400));
+        setGroupGuests(MOCK_GROUP_GUESTS[guest.group.id] || []);
+      } else {
+        const groupMembers = await guestService.getGuestsByGroup(guest.group.id);
+        setGroupGuests(groupMembers || []);
+      }
     } catch (err) {
       setError('Error al cargar el grupo de invitados');
     } finally {
@@ -105,19 +150,19 @@ useEffect(() => {
     }
   };
 
-  // Update guests in a group
   const updateGroupGuests = async (groupId, updatedGuests) => {
     setIsLoading(true);
     setError(null);
     setUpdateSuccess(false);
-    
     try {
-      const result = await guestService.updateGuestsByGroup(groupId, updatedGuests);
-      console.log("API update successful:", result);
+      if (USE_MOCK) {
+        console.log('🎭 Guardando mock:', updatedGuests);
+        await new Promise(r => setTimeout(r, 500));
+      } else {
+        await guestService.updateGuestsByGroup(groupId, updatedGuests);
+      }
       setUpdateSuccess(true);
-      return result;
     } catch (err) {
-      console.error("API update error:", err);
       setError('Error al actualizar los invitados');
       setUpdateSuccess(false);
       throw err;
@@ -126,60 +171,27 @@ useEffect(() => {
     }
   };
 
-  // Reset form state
-  const resetFormState = () => {
-    setUpdateSuccess(false);
-    setError(null);
-  };
-
-  // Clear search
-  const clearSearch = () => {
-    setSearchResults([]);
-    setIsSearching(false);
-    setHasSearched(false); // Reset hasSearched state
-  };
-
-  // Reset all state
+  const resetFormState = () => { setUpdateSuccess(false); setError(null); };
+  const clearSearch = () => { setSearchResults([]); setIsSearching(false); setHasSearched(false); };
   const resetAll = () => {
-    setSearchResults([]);
-    setSelectedGuest(null);
-    setGroupGuests([]);
-    setIsSearching(false);
-    setIsLoading(false);
-    setError(null);
-    setUpdateSuccess(false);
-    setHasSearched(false); // Reset hasSearched state
+    setSearchResults([]); setSelectedGuest(null); setGroupGuests([]);
+    setIsSearching(false); setIsLoading(false); setError(null);
+    setUpdateSuccess(false); setHasSearched(false);
   };
 
-  // Context value
   const value = {
-    allGuests,
-    isLoadingAllGuests,
-    searchResults,
-    isSearching,
-    hasSearched,
-    selectedGuest,
-    groupGuests,
-    isLoading,
-    error,
-    updateSuccess,
-    searchGuests,
-    fetchGroupGuests,
-    updateGroupGuests,
-    resetFormState,
-    clearSearch,
-    resetAll
+    allGuests, isLoadingAllGuests, searchResults, isSearching, hasSearched,
+    selectedGuest, groupGuests, isLoading, error, updateSuccess,
+    searchGuests, fetchGroupGuests, updateGroupGuests,
+    resetFormState, clearSearch, resetAll
   };
 
   return <GuestContext.Provider value={value}>{children}</GuestContext.Provider>;
 };
 
-// Custom hook for using the context
 export const useGuests = () => {
   const context = useContext(GuestContext);
-  if (!context) {
-    throw new Error('useGuests must be used within a GuestProvider');
-  }
+  if (!context) throw new Error('useGuests must be used within a GuestProvider');
   return context;
 };
 

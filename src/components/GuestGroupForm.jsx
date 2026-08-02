@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useGuests } from '../contexts/GuestContext';
 
+const BUS_OPTIONS = [
+  { value: 'No', label: 'No, gracias', icon: '🚗', desc: 'Iré por mi cuenta' },
+  { value: '21h', label: '21:00', icon: '🌅', desc: 'Vuelta temprana' },
+  { value: '00h', label: '00:00', icon: '🌙', desc: 'Vuelta después de la fiesta' },
+];
+
 const GuestGroupForm = ({ onSuccess }) => {
   const {
     selectedGuest,
@@ -19,16 +25,25 @@ const GuestGroupForm = ({ onSuccess }) => {
   // Initialize form data when group guests are loaded
   useEffect(() => {
     if (groupGuests.length > 0) {
-      const initialFormData = groupGuests.map(guest => ({
-        ...guest,
-        confirmedAttendance: guest.confirmedAttendance === null ? false : guest.confirmedAttendance,
-        goingByBus: guest.goingByBus === null ? false : guest.goingByBus
-      }));
+      const initialFormData = groupGuests.map(guest => {
+        // FIX: if goingByBus is null/undefined but bus has a value, default to true
+        const hasBus = guest.bus && guest.bus !== '' && guest.bus !== 'No';
+        const goingByBus = guest.goingByBus !== null && guest.goingByBus !== undefined
+          ? guest.goingByBus
+          : hasBus;
+
+        return {
+          ...guest,
+          confirmedAttendance: guest.confirmedAttendance === null ? false : guest.confirmedAttendance,
+          goingByBus,
+          // Preserve original bus value for restoring when toggling
+          _originalBus: guest.bus || ''
+        };
+      });
       setFormData(initialFormData);
     }
   }, [groupGuests]);
 
-  // Handle form field changes for a specific guest
   const handleChange = (id, field, value) => {
     setFormData(prevData =>
       prevData.map(guest =>
@@ -37,34 +52,27 @@ const GuestGroupForm = ({ onSuccess }) => {
     );
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValidationError('');
 
-    // Validate: if going by bus, must select a return option
     const invalidGuests = formData.filter(
-      guest => guest.confirmedAttendance && guest.goingByBus && !guest.bus
+      guest => guest.confirmedAttendance && guest.goingByBus && (!guest.bus || guest.bus === '')
     );
     if (invalidGuests.length > 0) {
       const names = invalidGuests.map(g => `${g.name} ${g.surname}`).join(', ');
-      setValidationError(
-        `Por favor, selecciona la opción de vuelta en bus para: ${names}`
-      );
+      setValidationError(`Por favor, selecciona la opción de vuelta en bus para: ${names}`);
       return;
     }
 
-    // Check if any guest is marked as not attending and ask for confirmation
     const nonAttendingGuests = formData.filter(guest => !guest.confirmedAttendance);
     if (nonAttendingGuests.length > 0 && !showNonAttendConfirm) {
       setShowNonAttendConfirm(true);
       return;
     }
     setShowNonAttendConfirm(false);
-
     setSubmitting(true);
 
-    // Convert form data to the format expected by the API
     const guestDTOs = formData.map(guest => ({
       id: guest.id,
       name: guest.name,
@@ -74,21 +82,15 @@ const GuestGroupForm = ({ onSuccess }) => {
       dietaryRestrictions: guest.dietaryRestrictions,
       suggests: guest.suggests,
       goingByBus: guest.goingByBus,
-      bus: guest.bus,
+      bus: guest.goingByBus ? guest.bus : null,
       groupGuestId: selectedGuest.group.id
     }));
 
     try {
       await updateGroupGuests(selectedGuest.group.id, guestDTOs);
-      // Wait briefly to show success message before navigating
-      setTimeout(() => {
-        if (onSuccess) {
-          onSuccess();
-        }
-      }, 500);
+      setTimeout(() => { if (onSuccess) onSuccess(); }, 500);
     } catch (err) {
       console.error("Error updating guests:", err);
-      // Error is handled in the context
     } finally {
       setSubmitting(false);
     }
@@ -167,9 +169,16 @@ const GuestGroupForm = ({ onSuccess }) => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="font-serif text-xl text-sage-800 tracking-wide">
-                  {guest.name} {guest.surname}
-                </h3>
+                <div>
+                  <h3 className="font-serif text-xl text-sage-800 tracking-wide">
+                    {guest.name} {guest.surname}
+                  </h3>
+                  {guest.goingByBus && guest.bus && guest.bus !== '' && (
+                    <span className="inline-flex items-center gap-1 text-xs text-sage-500 mt-1 font-sans">
+                      🚌 Bus {guest.bus}h
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center">
                   <span className="text-sm font-sans text-sage-600 mr-3">
                     {guest.confirmedAttendance ? 'Asistirá' : 'No asistirá'}
@@ -188,16 +197,15 @@ const GuestGroupForm = ({ onSuccess }) => {
 
               {guest.kid && (
                 <div className="mb-3 inline-block px-3 py-1 bg-blush-100 text-blush-700 rounded-full text-xs font-sans">
-                  Adolescente/Niño
+                  👶 Adolescente/Niño
                 </div>
               )}
 
-              {/* Show additional fields only if attendance is confirmed */}
               {guest.confirmedAttendance && (
-                <div className="mt-5 space-y-4">
+                <div className="mt-5 space-y-5">
                   <div>
                     <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
-                      Restricciones alimentarias
+                      🍽️ Restricciones alimentarias
                     </label>
                     <input
                       type="text"
@@ -210,7 +218,7 @@ const GuestGroupForm = ({ onSuccess }) => {
 
                   <div>
                     <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
-                      Sugerencias de música
+                      🎵 Sugerencias de música
                     </label>
                     <input
                       type="text"
@@ -221,72 +229,90 @@ const GuestGroupForm = ({ onSuccess }) => {
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
-                      ¿Vas a ir en bus a la boda?
+                  {/* === BUS SECTION — REDISEÑADA === */}
+                  <div className="bg-sage-50/50 rounded-xl p-4 border border-sage-200">
+                    <label className="block text-sm font-medium font-sans text-sage-700 mb-3">
+                      🚌 ¿Vas a ir en bus a la boda?
                     </label>
-                    <div className="flex items-center space-x-4">
-                      <label className="flex items-center">
-                        <input
-                          type="radio"
-                          name={`goingByBus-${guest.id}`}
-                          value="true"
-                          checked={guest.goingByBus === true}
-                          onChange={e => handleChange(guest.id, 'goingByBus', true)}
-                          className="mr-2 text-wine-600 focus:ring-wine-500"
-                        />
-                        <span className="font-sans text-sage-700">Sí</span>
-                      </label>
-                      <label className="flex items-center">
-                        <input
-                          type="radio"
-                          name={`goingByBus-${guest.id}`}
-                          value="false"
-                          checked={guest.goingByBus === false}
-                          onChange={e => {
-                            handleChange(guest.id, 'goingByBus', false);
-                            handleChange(guest.id, 'bus', ''); // Reset bus return option
-                          }}
-                          className="mr-2 text-wine-600 focus:ring-wine-500"
-                        />
-                        <span className="font-sans text-sage-700">No</span>
-                      </label>
-                    </div>
-                  </div>
 
-                  {/* Show return bus options only if going by bus */}
-                  {guest.goingByBus && (
-                    <div>
-                      <label className="block text-sm font-medium font-sans text-sage-700 mb-2">
-                        ¿Vas a volver en bus y a qué hora?
-                      </label>
-                      <select
-                        value={guest.bus || ''}
-                        onChange={e => handleChange(guest.id, 'bus', e.target.value)}
-                        className={`w-full px-4 py-2 border-b-2 ${validationError && !guest.bus ? 'border-blush-500 bg-blush-50/30' : 'border-wine-400 bg-wine-50/30'} focus:border-wine-600 rounded-t-md focus:outline-none transition-colors font-sans text-sage-700`}
+                    {/* Toggle SI/NO */}
+                    <div className="flex gap-2 mb-4">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleChange(guest.id, 'goingByBus', true);
+                          // Restore original bus value if exists
+                          const originalBus = guest._originalBus;
+                          if (originalBus && originalBus !== '' && originalBus !== 'No') {
+                            handleChange(guest.id, 'bus', originalBus);
+                          }
+                        }}
+                        className={`flex-1 py-2.5 px-4 rounded-lg font-sans text-sm font-medium transition-all ${
+                          guest.goingByBus
+                            ? 'bg-wine-600 text-white shadow-md scale-105'
+                            : 'bg-white text-sage-600 border border-sage-300 hover:bg-sage-100'
+                        }`}
                       >
-                        <option value="">Selecciona una opción</option>
-                        <option value="No">No</option>
-                        <option value="21h">21h</option>
-                        <option value="00h">00h</option>
-                      </select>
-                      {validationError && !guest.bus && (
-                        <p className="mt-1.5 text-sm text-blush-600 font-sans flex items-center animate-fade-in">
-                          <svg className="h-4 w-4 mr-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                          </svg>
-                          Debes seleccionar una opción de vuelta en bus
-                        </p>
-                      )}
+                        🚌 Sí, voy en bus
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleChange(guest.id, 'goingByBus', false);
+                          handleChange(guest.id, 'bus', '');
+                        }}
+                        className={`flex-1 py-2.5 px-4 rounded-lg font-sans text-sm font-medium transition-all ${
+                          guest.goingByBus === false
+                            ? 'bg-wine-600 text-white shadow-md scale-105'
+                            : 'bg-white text-sage-600 border border-sage-300 hover:bg-sage-100'
+                        }`}
+                      >
+                        🚗 No, voy por mi cuenta
+                      </button>
                     </div>
-                  )}
+
+                    {/* Bus time options — cards instead of dropdown */}
+                    {guest.goingByBus && (
+                      <div className="animate-fade-in">
+                        <label className="block text-sm font-medium font-sans text-sage-600 mb-2">
+                          ¿A qué hora vuelves?
+                        </label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {BUS_OPTIONS.map(opt => (
+                            <button
+                              key={opt.value}
+                              type="button"
+                              onClick={() => handleChange(guest.id, 'bus', opt.value)}
+                              className={`flex flex-col items-center justify-center py-3 px-2 rounded-lg border-2 transition-all text-center ${
+                                guest.bus === opt.value
+                                  ? 'border-wine-600 bg-wine-50 shadow-md scale-105'
+                                  : 'border-sage-200 bg-white hover:border-wine-400 hover:bg-wine-50/50'
+                              }`}
+                            >
+                              <span className="text-xl mb-1">{opt.icon}</span>
+                              <span className="font-sans font-semibold text-sm text-sage-800">{opt.label}</span>
+                              <span className="font-sans text-[10px] text-sage-500 mt-0.5">{opt.desc}</span>
+                            </button>
+                          ))}
+                        </div>
+                        {validationError && (!guest.bus || guest.bus === '') && (
+                          <p className="mt-2 text-sm text-blush-600 font-sans flex items-center animate-fade-in">
+                            <svg className="h-4 w-4 mr-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                            Selecciona una hora de vuelta
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Modal de confirmación de no asistencia */}
+        {/* Modal confirmación no asistencia */}
         {showNonAttendConfirm && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
             <div className="bg-white rounded-2xl shadow-2xl p-8 mx-4 max-w-md w-full text-center animate-fade-in">
@@ -326,10 +352,9 @@ const GuestGroupForm = ({ onSuccess }) => {
           <button
             type="submit"
             disabled={submitting}
-            className={`px-8 py-3 rounded-md text-white font-sans font-medium text-lg transition-all ${submitting
-                ? 'bg-sage-400 cursor-not-allowed'
-                : 'bg-wine-600 hover:bg-wine-700 shadow-sm hover:shadow'
-              }`}
+            className={`px-8 py-3 rounded-md text-white font-sans font-medium text-lg transition-all ${
+              submitting ? 'bg-sage-400 cursor-not-allowed' : 'bg-wine-600 hover:bg-wine-700 shadow-sm hover:shadow'
+            }`}
           >
             {submitting ? (
               <span className="flex items-center">
