@@ -58,7 +58,7 @@ const SuccessPage = () => {
         />
       ))}
 
-      <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-8 md:p-10 mb-10 border border-champagne-100 animate-fade-in card-handmade corner-flourish">
+      <section className="max-w-2xl mx-auto section-card animate-fade-in text-center">
         {/* Sello de cera simulado */}
         <div className="w-24 h-24 mx-auto -mt-16 mb-4 relative z-10">
           <div className="w-full h-full rounded-full bg-wine-600 flex items-center justify-center shadow-lg"
@@ -74,9 +74,7 @@ const SuccessPage = () => {
           </svg>
         </div>
 
-        <h2 className="text-3xl font-handwriting text-sage-700 mb-4 text-center tracking-wide text-balance handcrafted-title">
-          ¡Gracias por confirmar!
-        </h2>
+        <h2 className="section-title">¡Gracias por confirmar!</h2>
 
         {selectedGuest && selectedGuest.group && (
           <p className="text-xl font-serif text-sage-600 mb-2 text-center tracking-wide">
@@ -89,7 +87,7 @@ const SuccessPage = () => {
           ¡Preparaos para una noche inolvidable!
         </p>
 
-        <div className="divider-tile"></div>
+        <div className="section-divider"><span>❦</span></div>
 
         <p className="text-center text-sage-500 text-sm font-handwriting italic mb-6 tracking-wide">
           {frase}

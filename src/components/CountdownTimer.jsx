@@ -22,13 +22,11 @@ const CountdownTimer = ({ weddingDate = '2026-11-21T12:00:00+01:00' }) => {
 
   return (
     <div
-      className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 my-8 border border-wine-300 border-t-4 border-t-wine-600"
+      className="w-full max-w-2xl mx-auto section-card"
       role="timer"
       aria-label="Cuenta atrás para la boda"
     >
-      <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-6 tracking-wide text-balance">
-        Cuenta atrás para nuestro gran día
-      </h3>
+      <h3 className="section-title">Cuenta atrás para nuestro gran día</h3>
 
       {isOver ? (
         <p className="text-xl font-serif text-sage-700 text-center" aria-live="polite">

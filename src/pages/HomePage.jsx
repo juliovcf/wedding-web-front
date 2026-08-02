@@ -52,12 +52,8 @@ const HomePage = () => {
       <CountdownTimer weddingDate="2026-11-21T17:00:00" />
 
       {/* Search and RSVP Section */}
-      <section id="confirmar" className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-wine-300 border-t-4 border-t-wine-600 scroll-mt-20 card-handmade">
-        <div className="text-center mb-8 animate-fade-in">
-          <h2 className="font-handwriting text-3xl text-sage-700 mb-3 tracking-wide text-balance handcrafted-title">
-            Confirma tu asistencia
-          </h2>
-        </div>
+      <section id="confirmar" className="max-w-2xl mx-auto section-card scroll-mt-20">
+        <h2 className="section-title">Confirma tu asistencia</h2>
 
         <SearchForm />
 
@@ -67,7 +63,7 @@ const HomePage = () => {
       </section>
 
       {/* Venue Information */}
-      <div className="divider-tile"></div>
+      <div className="section-divider"><span>❦</span></div>
       <div id="informacion" className="scroll-mt-20">
         <VenueInfo />
       </div>
@@ -78,10 +74,8 @@ const HomePage = () => {
       </div>
 
       {/* Gifts Section */}
-      <section id="regalo" className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 md:p-8 my-8 border border-wine-300 border-t-4 border-t-wine-600 scroll-mt-20">
-        <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-6 tracking-wide">
-          Regalos
-        </h3>
+      <section id="regalo" className="max-w-2xl mx-auto section-card scroll-mt-20">
+        <h3 className="section-title">Regalos</h3>
 
         <div className="text-center mb-6">
           <p className="font-sans text-sage-600 leading-relaxed mb-4">

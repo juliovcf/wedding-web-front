@@ -7,8 +7,8 @@ const VenueInfo = () => {
   const getDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&destination_place_id=ChIJjw3e2Oz_XA0R5sN3hX3tEm4`;
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-6 my-8 border border-wine-300 border-t-4 border-t-wine-600 card-handmade">
-      <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-4 tracking-wide handcrafted-title">Lugar de Celebración</h3>
+    <div className="w-full max-w-2xl mx-auto section-card">
+      <h3 className="section-title">Lugar de Celebración</h3>
       
       <div className="flex flex-col md:flex-row gap-6">
         <div className="md:w-1/2">
