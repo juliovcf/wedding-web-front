@@ -54,7 +54,7 @@ const MOCK_GROUP_GUESTS = {
   4: [MOCK_GUESTS[6]],                   // Amigos Universidad
 };
 
-const USE_MOCK = true; // Cambiar a false cuando el backend esté disponible
+const USE_MOCK = false; // Cambiar a false cuando el backend esté disponible
 // ==================
 
 // Create context
