@@ -52,9 +52,9 @@ const HomePage = () => {
       <CountdownTimer weddingDate="2026-11-21T17:00:00" />
 
       {/* Search and RSVP Section */}
-      <section id="confirmar" className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-wine-300 border-t-4 border-t-wine-600 scroll-mt-20">
+      <section id="confirmar" className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-wine-300 border-t-4 border-t-wine-600 scroll-mt-20 card-handmade">
         <div className="text-center mb-8 animate-fade-in">
-          <h2 className="font-handwriting text-3xl text-sage-700 mb-3 tracking-wide text-balance">
+          <h2 className="font-handwriting text-3xl text-sage-700 mb-3 tracking-wide text-balance handcrafted-title">
             Confirma tu asistencia
           </h2>
         </div>
@@ -67,6 +67,7 @@ const HomePage = () => {
       </section>
 
       {/* Venue Information */}
+      <div className="divider-tile"></div>
       <div id="informacion" className="scroll-mt-20">
         <VenueInfo />
       </div>
