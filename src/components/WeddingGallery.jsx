@@ -25,10 +25,8 @@ const WeddingGallery = () => {
   };
 
   return (
-    <section className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-elegant p-4 md:p-6 my-8 overflow-hidden border border-wine-300 border-t-4 border-t-wine-600">
-      <h3 className="text-center font-handwriting text-2xl md:text-3xl text-sage-700 mb-4 tracking-wide">
-        Nuestras Fotos
-      </h3>
+    <section className="w-full max-w-2xl mx-auto section-card overflow-hidden">
+      <h3 className="section-title">Nuestras Fotos</h3>
 
       {/* Collage Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">

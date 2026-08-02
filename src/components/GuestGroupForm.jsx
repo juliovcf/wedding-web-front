@@ -165,8 +165,8 @@ const GuestGroupForm = ({ onSuccess }) => {
           {formData.map((guest, index) => (
             <div
               key={guest.id}
-              className="bg-white rounded-lg shadow-elegant p-5 border border-wine-300 border-t-4 border-t-wine-600 animate-slide-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="bg-white rounded-sm shadow-sm p-5 animate-slide-up"
+              style={{ border: '1px solid rgba(157,74,101,0.1)', animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex justify-between items-center mb-4">
                 <div>

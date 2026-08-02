@@ -1,31 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import { useGuests } from '../contexts/GuestContext';
-
-const FRASES_VALENCIANAS = [
-  'Que l\'amor us acompanye sempre',
-  'Salut, amor i alegria',
-  'Per molts anys, Julio i Cristina',
-  'Avui i sempre, junts',
-];
 
 const SuccessPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { selectedGuest, resetAll } = useGuests();
-  const [riceParticles] = useState(() =>
-    Array.from({ length: 50 }, (_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      delay: `${Math.random() * 3}s`,
-      duration: `${3 + Math.random() * 4}s`,
-      size: `${4 + Math.random() * 4}px`,
-    }))
-  );
-  const [frase] = useState(() =>
-    FRASES_VALENCIANAS[Math.floor(Math.random() * FRASES_VALENCIANAS.length)]
-  );
 
   useEffect(() => {
     const fromConfirmation = location.state && location.state.fromConfirmation;
@@ -43,27 +24,12 @@ const SuccessPage = () => {
 
   return (
     <>
-      {/* Lluvia de arroz */}
-      {riceParticles.map(p => (
-        <div
-          key={p.id}
-          className="rice-particle"
-          style={{
-            left: p.left,
-            animationDelay: p.delay,
-            animationDuration: p.duration,
-            width: p.size,
-            height: `${parseInt(p.size) * 1.6}px`,
-          }}
-        />
-      ))}
-
       <section className="max-w-2xl mx-auto section-card animate-fade-in text-center">
         {/* Sello de cera simulado */}
         <div className="w-24 h-24 mx-auto -mt-16 mb-4 relative z-10">
           <div className="w-full h-full rounded-full bg-wine-600 flex items-center justify-center shadow-lg"
                style={{ background: 'radial-gradient(circle at 30% 30%, #CB7F96, #7A3750)' }}>
-            <span className="text-white text-3xl font-handwriting">J&C</span>
+            <span className="text-white text-3xl font-handwriting">C&J</span>
           </div>
         </div>
 
@@ -90,13 +56,13 @@ const SuccessPage = () => {
         <div className="section-divider"><span>❦</span></div>
 
         <p className="text-center text-sage-500 text-sm font-handwriting italic mb-6 tracking-wide">
-          {frase}
+          Sí a todo si es contigo
         </p>
 
         <div className="text-center">
           <button
             onClick={handleReturnHome}
-            className="px-8 py-3 bg-wine-600 text-white rounded-md hover:bg-wine-700 transition-all font-sans font-medium shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2 organic-rotate"
+            className="px-8 py-3 bg-wine-600 text-white rounded-md hover:bg-wine-700 transition-all font-sans font-medium shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-wine-400 focus:ring-offset-2"
           >
             Volver al inicio
           </button>

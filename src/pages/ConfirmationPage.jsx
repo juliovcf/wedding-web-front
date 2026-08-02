@@ -27,7 +27,7 @@ const ConfirmationPage = () => {
   };
 
   return (
-    <section className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-card p-6 md:p-8 mb-10 border border-wine-300 border-t-4 border-t-wine-600">
+    <section className="max-w-2xl mx-auto section-card mb-10">
       <div className="mb-4">
         <button
           onClick={() => navigate('/')}
