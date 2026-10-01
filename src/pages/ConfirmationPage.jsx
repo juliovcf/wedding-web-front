@@ -1,38 +1,40 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GuestGroupForm from '../components/GuestGroupForm';
 import { useGuests } from '../contexts/GuestContext';
 
 const ConfirmationPage = () => {
   const navigate = useNavigate();
-  const { selectedGuest, updateSuccess, resetFormState } = useGuests();
+  const { selectedGuest, resetFormState } = useGuests();
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     if (!selectedGuest) {
       navigate('/');
     }
-    return () => {
-      resetFormState();
-    };
-  }, [selectedGuest, navigate, resetFormState]);
+  }, [selectedGuest, navigate]);
 
+  // Solo al salir de la página. resetFormState cambia en cada render del contexto:
+  // si fuese dependencia, borraría el mensaje de error nada más mostrarse.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => resetFormState(), []);
+
+  // Al llegar desde la búsqueda la ventana conserva el scroll de la portada
   useEffect(() => {
-    if (updateSuccess) {
-      navigate('/success', { state: { fromConfirmation: true } });
-    }
-  }, [updateSuccess, navigate]);
+    sectionRef.current?.scrollIntoView({ block: 'start' });
+  }, []);
 
-  const handleSuccess = () => {
-    navigate('/success', { state: { fromConfirmation: true } });
+  const handleSuccess = ({ attendingCount, totalCount }) => {
+    navigate('/success', { state: { fromConfirmation: true, attendingCount, totalCount } });
   };
 
   return (
-    <section className="max-w-2xl mx-auto section-card mb-10">
+    <section ref={sectionRef} className="max-w-2xl mx-auto section-card mb-10 scroll-mt-6">
       <div className="mb-4">
         <button
-          onClick={() => navigate('/')}
-          className="text-wine-600 hover:text-wine-800 flex items-center font-sans transition-colors focus:outline-none focus:ring-2 focus:ring-wine-400 rounded-md px-2 py-1"
-          aria-label="Volver a la busqueda"
+          type="button"
+          onClick={() => navigate('/', { state: { scrollTo: 'confirmar' } })}
+          className="text-wine-600 hover:text-wine-800 flex items-center font-sans transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-wine-400 rounded-md px-2 py-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +49,7 @@ const ConfirmationPage = () => {
               clipRule="evenodd"
             />
           </svg>
-          Volver a la busqueda
+          Volver a la búsqueda
         </button>
       </div>
 

@@ -72,6 +72,8 @@ export const GuestProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSearchTerm, setLastSearchTerm] = useState('');
 
   useEffect(() => {
     const loadAllGuests = async () => {
@@ -100,6 +102,7 @@ export const GuestProvider = ({ children }) => {
   const searchGuests = (searchTerm) => {
     setIsSearching(true);
     setError(null);
+    setLastSearchTerm(searchTerm);
     try {
       if (!searchTerm.trim()) {
         setSearchResults([]);
@@ -150,8 +153,9 @@ export const GuestProvider = ({ children }) => {
     }
   };
 
+  // Usa isSaving (y no isLoading) para que el formulario siga visible mientras se guarda
   const updateGroupGuests = async (groupId, updatedGuests) => {
-    setIsLoading(true);
+    setIsSaving(true);
     setError(null);
     setUpdateSuccess(false);
     try {
@@ -163,25 +167,26 @@ export const GuestProvider = ({ children }) => {
       }
       setUpdateSuccess(true);
     } catch (err) {
-      setError('Error al actualizar los invitados');
+      setError('No hemos podido guardar tu respuesta. Inténtalo de nuevo en unos segundos.');
       setUpdateSuccess(false);
       throw err;
     } finally {
-      setIsLoading(false);
+      setIsSaving(false);
     }
   };
 
   const resetFormState = () => { setUpdateSuccess(false); setError(null); };
-  const clearSearch = () => { setSearchResults([]); setIsSearching(false); setHasSearched(false); };
+  const clearSearch = () => { setSearchResults([]); setIsSearching(false); setHasSearched(false); setLastSearchTerm(''); };
   const resetAll = () => {
     setSearchResults([]); setSelectedGuest(null); setGroupGuests([]);
     setIsSearching(false); setIsLoading(false); setError(null);
     setUpdateSuccess(false); setHasSearched(false);
+    setIsSaving(false); setLastSearchTerm('');
   };
 
   const value = {
     allGuests, isLoadingAllGuests, searchResults, isSearching, hasSearched,
-    selectedGuest, groupGuests, isLoading, error, updateSuccess,
+    selectedGuest, groupGuests, isLoading, isSaving, error, updateSuccess, lastSearchTerm,
     searchGuests, fetchGroupGuests, updateGroupGuests,
     resetFormState, clearSearch, resetAll
   };

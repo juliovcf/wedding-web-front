@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+import { WEDDING_DATE } from '../config';
 
 const LABELS = {
-  days: 'Dias',
+  days: 'Días',
   hours: 'Horas',
   minutes: 'Minutos',
   seconds: 'Segundos',
 };
 
-const CountdownTimer = ({ weddingDate = '2026-11-21T12:00:00+01:00' }) => {
+const CountdownTimer = ({ weddingDate = WEDDING_DATE }) => {
   const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft(weddingDate));
 
   useEffect(() => {
@@ -30,22 +31,19 @@ const CountdownTimer = ({ weddingDate = '2026-11-21T12:00:00+01:00' }) => {
 
       {isOver ? (
         <p className="text-xl font-serif text-sage-700 text-center" aria-live="polite">
-          Hoy es el gran día!
+          ¡Hoy es el gran día!
         </p>
       ) : (
-        <div className="flex justify-center gap-3 md:gap-6">
+        <div className="flex justify-center gap-2.5 md:gap-5">
           {entries.map(([key, value]) => (
-            <div
-              key={key}
-              className="flex flex-col items-center min-w-[60px] md:min-w-[80px] bg-champagne-50 rounded-lg p-3 md:p-4"
-            >
-              <span
-                className="text-3xl md:text-4xl lg:text-5xl font-serif text-sage-800 tabular-nums leading-none"
-                aria-label={`${value} ${LABELS[key]}`}
-              >
-                {String(value).padStart(2, '0')}
-              </span>
-              <span className="text-xs md:text-sm uppercase tracking-wider text-sage-500 mt-2 font-sans font-medium">
+            <div key={key} className="flex flex-col items-center">
+              <div className="countdown-card">
+                {/* key={value}: se vuelve a montar al cambiar y repite el giro */}
+                <span key={value} className="countdown-card__value">
+                  {String(value).padStart(2, '0')}
+                </span>
+              </div>
+              <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-sage-500 mt-2.5 font-sans font-medium">
                 {LABELS[key]}
               </span>
             </div>

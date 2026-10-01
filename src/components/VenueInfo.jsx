@@ -1,3 +1,11 @@
+import Icon from './Icon';
+
+const SCHEDULE = [
+  { time: '12:00', label: 'Ceremonia', icon: 'rings' },
+  { time: '13:00', label: 'Cóctel', icon: 'cocktail' },
+  { time: '14:30', label: 'Comida', icon: 'utensils' },
+  { time: '16:00', label: 'Fiesta', icon: 'music' },
+];
 
 const VenueInfo = () => {
   const latitude = 40.00978671262281;
@@ -63,26 +71,23 @@ const VenueInfo = () => {
         </div>
         
         <div className="md:w-1/2">
-          <h4 className="font-serif text-lg text-sage-800 mb-2 tracking-wide">Horario</h4>
-          <div className="space-y-3">
-            <div className="flex justify-between border-b border-wine-200 border-opacity-50 pb-2">
-              <span className="text-sm font-medium text-sage-700 font-sans">Ceremonia</span>
-              <span className="text-sm text-sage-600 font-sans">12:00h</span>
-            </div>
-            <div className="flex justify-between border-b border-wine-200 border-opacity-50 pb-2">
-              <span className="text-sm font-medium text-sage-700 font-sans">Cóctel</span>
-              <span className="text-sm text-sage-600 font-sans">13:00h</span>
-            </div>
-            <div className="flex justify-between border-b border-wine-200 border-opacity-50 pb-2">
-              <span className="text-sm font-medium text-sage-700 font-sans">Comida</span>
-              <span className="text-sm text-sage-600 font-sans">14:30h</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm font-medium text-sage-700 font-sans">Fiesta</span>
-              <span className="text-sm text-sage-600 font-sans">16:00h</span>
-            </div>
-          </div>
-          
+          <h4 className="font-serif text-lg text-sage-800 mb-4 tracking-wide">Horario</h4>
+          <ol className="timeline">
+            {SCHEDULE.map((item, index) => (
+              <li
+                key={item.label}
+                className="timeline__item"
+                style={{ '--delay': `${200 + index * 150}ms` }}
+              >
+                <span className="timeline__icon" aria-hidden="true">
+                  <Icon name={item.icon} strokeWidth={1.5} />
+                </span>
+                <span className="timeline__time">{item.time}</span>
+                <span className="timeline__label">{item.label}</span>
+              </li>
+            ))}
+          </ol>
+
           <div className="mt-6 p-4 bg-champagne-50 rounded-md border border-champagne-100">
             <h5 className="font-serif text-base text-sage-800 mb-2">Información adicional</h5>
             <ul className="space-y-2 text-sm text-sage-700 font-sans">

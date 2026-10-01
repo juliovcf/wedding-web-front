@@ -1,24 +1,21 @@
 import { useRef, useState } from 'react';
 import Footer from './Footer';
 import Header from './Header';
+import IntroEnvelope from './IntroEnvelope';
 import NavMenu from './NavMenu';
 
 const Layout = ({ children }) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showMusicPrompt, setShowMusicPrompt] = useState(true);
+  const [showIntro, setShowIntro] = useState(true);
 
-  const startMusic = () => {
-    if (audioRef.current) {
+  // Se llama dentro del clic de la intro, así el navegador permite reproducir el audio
+  const handleIntroOpen = (withMusic) => {
+    if (withMusic && audioRef.current) {
       audioRef.current.play().then(() => {
         setIsPlaying(true);
       }).catch(() => {});
     }
-    setShowMusicPrompt(false);
-  };
-
-  const dismissPrompt = () => {
-    setShowMusicPrompt(false);
   };
 
   const toggleMusic = () => {
@@ -41,31 +38,9 @@ const Layout = ({ children }) => {
       {/* Navigation Menu */}
       <NavMenu />
 
-      {/* Pop-up de música al entrar */}
-      {showMusicPrompt && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 mx-4 max-w-sm w-full text-center animate-fade-in">
-            <span className="text-4xl mb-4 block">🎵</span>
-            <h3 className="text-xl font-serif text-sage-800 mb-2">Música ambiental</h3>
-            <p className="text-sage-600 text-sm mb-6">
-              ¿Te gustaría disfrutar de música mientras navegas por nuestra invitación?
-            </p>
-            <div className="flex gap-3 justify-center">
-              <button
-                onClick={startMusic}
-                className="bg-gradient-to-r from-sage-600 to-wine-600 text-white px-6 py-2.5 rounded-full font-medium hover:shadow-lg transition-all hover:scale-105"
-              >
-                Sí, activar ♫
-              </button>
-              <button
-                onClick={dismissPrompt}
-                className="border border-sage-300 text-sage-600 px-6 py-2.5 rounded-full font-medium hover:bg-sage-50 transition-all"
-              >
-                No, gracias
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* Sobre de bienvenida al entrar (también decide si suena la música) */}
+      {showIntro && (
+        <IntroEnvelope onOpen={handleIntroOpen} onFinish={() => setShowIntro(false)} />
       )}
 
       {/* Audio element - persiste durante toda la navegación */}
@@ -81,16 +56,25 @@ const Layout = ({ children }) => {
 
       {/* Botón flotante de música */}
       <button
+        type="button"
         onClick={toggleMusic}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-sage-600 to-wine-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110 group"
-        title={isPlaying ? 'Pausar música' : 'Reproducir música'}
+        className={`music-button group ${isPlaying ? 'is-playing' : ''}`}
         aria-label={isPlaying ? 'Pausar música' : 'Reproducir música'}
+        aria-pressed={isPlaying}
       >
-        <span className="text-xl animate-pulse" style={{ animationDuration: isPlaying ? '1s' : '0s' }}>
-          {isPlaying ? '♫' : '♪'}
-        </span>
-        <span className="absolute bottom-full right-0 mb-2 bg-sage-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-          {isPlaying ? 'Pausar' : 'Reproducir'}
+        {isPlaying ? (
+          <span className="music-bars" aria-hidden="true">
+            <span /><span /><span /><span />
+          </span>
+        ) : (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 18V6l10-2v12" />
+            <circle cx="7" cy="18" r="2" />
+            <circle cx="17" cy="16" r="2" />
+          </svg>
+        )}
+        <span className="absolute bottom-full right-0 mb-2 bg-sage-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+          {isPlaying ? 'Pausar música' : 'Poner música'}
         </span>
       </button>
 
