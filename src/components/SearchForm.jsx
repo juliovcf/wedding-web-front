@@ -42,7 +42,7 @@ const SearchForm = () => {
             value={searchTerm}
             onChange={handleInputChange}
             placeholder="Escribe tu nombre o apellido"
-            className="w-full pl-4 pr-11 py-3 border-b-2 border-wine-400 focus:border-wine-600 bg-white/80 backdrop-blur-sm rounded-t-md focus:outline-none transition-colors placeholder-sage-400 font-sans"
+            className="w-full pl-4 pr-11 py-3 border-b-2 border-wine-400 focus:border-wine-600 bg-white/90 rounded-t-md focus:outline-none transition-colors placeholder-sage-400 font-sans"
             autoComplete="off"
             enterKeyHint="search"
             aria-describedby={isTooShort ? 'searchHint' : undefined}

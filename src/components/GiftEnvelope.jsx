@@ -55,9 +55,8 @@ const GiftEnvelope = () => {
         wasOpened={wasOpened}
         onOpen={toggleEnvelope}
         openLabel="Abrir el sobre con la información bancaria"
-        front={<span className="envelope__front-title">Con cariño</span>}
       >
-        <p className="gift-letter__title">Gracias por tu cariño</p>
+        <p className="gift-letter__title">Cristina y Julio</p>
         <p className="gift-letter__label">IBAN</p>
         <p className="gift-letter__iban">{IBAN_DISPLAY}</p>
         <button

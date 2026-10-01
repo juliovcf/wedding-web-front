@@ -1,6 +1,6 @@
 import Icon from './Icon';
 
-export const DIET_OPTIONS = ['Vegetariano', 'Vegano', 'Sin gluten', 'Sin lactosa', 'Sin frutos secos', 'Sin marisco'];
+export const DIET_OPTIONS = ['Vegetariano', 'Vegano', 'Sin gluten', 'Sin lactosa', 'Sin frutos secos', 'Sin marisco', 'Embarazada'];
 
 const findOption = (token) =>
   DIET_OPTIONS.find((opt) => opt.toLowerCase() === token.toLowerCase());

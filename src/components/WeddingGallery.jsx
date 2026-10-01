@@ -120,7 +120,7 @@ const WeddingGallery = () => {
       {/* Lightbox */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-[90] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:px-20 animate-fade-in"
+          className="fixed inset-0 z-[90] bg-black/90 flex items-center justify-center p-4 md:px-20 animate-fade-in"
           onClick={close}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}

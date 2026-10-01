@@ -31,7 +31,7 @@ const GuestList = ({ onSelectGuest }) => {
       <h3 className="text-lg font-serif text-sage-700 mb-3 tracking-wide">
         {searchResults.length === 1 ? '1 invitado encontrado' : `${searchResults.length} invitados encontrados`}
       </h3>
-      <ul className="bg-white/90 backdrop-blur-sm rounded-md shadow-elegant divide-y divide-wine-200 border border-wine-300">
+      <ul className="bg-white rounded-md shadow-elegant divide-y divide-wine-200 border border-wine-300">
         {searchResults.map((guest) => (
           <li key={guest.id} className="hover:bg-wine-50 transition-colors">
             <button

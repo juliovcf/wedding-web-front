@@ -57,7 +57,7 @@ const NavMenu = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md'
+          ? 'bg-white/95 shadow-md'
           : 'bg-transparent'
       }`}
     >
@@ -105,7 +105,7 @@ const NavMenu = () => {
         {/* Mobile menu dropdown */}
         {isOpen && (
           <div className="md:hidden pb-4 animate-fade-in">
-            <div className="bg-white/95 backdrop-blur-md rounded-lg shadow-lg border border-sage-200/50 overflow-hidden">
+            <div className="bg-white/95 rounded-lg shadow-lg border border-sage-200/50 overflow-hidden">
               {navItems.map((item) => (
                 <button
                   key={item.id}
