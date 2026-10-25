@@ -6,7 +6,7 @@ import DietaryField, { parseDiet, serializeDiet } from './DietaryField';
 import Icon from './Icon';
 
 const RETURN_OPTIONS = [
-  { value: '22h', label: '21:00', icon: 'sunset', desc: 'Vuelta temprana' },
+  { value: '22h', label: '22:00', icon: 'sunset', desc: 'Vuelta temprana' },
   { value: '00h', label: '00:00', icon: 'moon', desc: 'Tras la fiesta' },
 ];
 
