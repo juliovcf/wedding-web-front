@@ -5,7 +5,7 @@ import guestService from '../services/api';
 const MOCK_GUESTS = [
   {
     id: 1, name: "Julio", surname: "Pérez", kid: false,
-    confirmedAttendance: true, goingByBus: true, bus: "21h",
+    confirmedAttendance: true, goingByBus: true, bus: "22h",
     dietaryRestrictions: "Sin gluten", suggests: "Algo de los 80",
     group: { id: 1, name: "Familia Pérez" }
   },
@@ -23,7 +23,7 @@ const MOCK_GUESTS = [
   },
   {
     id: 4, name: "Carlos", surname: "López", kid: false,
-    confirmedAttendance: true, goingByBus: null, bus: "21h",
+    confirmedAttendance: true, goingByBus: null, bus: "22h",
     dietaryRestrictions: "", suggests: "Reggaeton por favor",
     group: { id: 2, name: "Familia López" }
   },
@@ -35,7 +35,7 @@ const MOCK_GUESTS = [
   },
   {
     id: 6, name: "Pedro", surname: "Martínez", kid: false,
-    confirmedAttendance: true, goingByBus: true, bus: "21h",
+    confirmedAttendance: true, goingByBus: true, bus: "22h",
     dietaryRestrictions: "Alergia frutos secos", suggests: "Bachata",
     group: { id: 3, name: "Familia Martínez" }
   },
